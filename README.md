@@ -1,2 +1,1 @@
-# website
-My personal website
+My personal website, generated using [Hugo](https://gohugo.io/). 
