@@ -38,6 +38,11 @@ title = "GitHub"
 url = "https://github.com/michaelboyles"
 
 [[params.socialIcons]]
+icon = "fa-stack-overflow"
+title = "StackOverflow"
+url = "https://stackoverflow.com/users/1898563/michael"
+
+[[params.socialIcons]]
 icon = "fa-linkedin"
 title = "Linkedin"
 url = "https://www.linkedin.com/in/boylesm/"
@@ -61,3 +66,4 @@ url = "mailto:michael@boyl.es"
   weight = 300
   identifier = "about"
   url = "/about/"
+
