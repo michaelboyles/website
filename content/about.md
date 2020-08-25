@@ -6,4 +6,8 @@ aliases = ["about-us","about-hugo","contact"]
 author = "Michael Boyles"
 +++
 
-I am a software developer based in London.
+I'm Michael Boyles. I'm a software developer based in London, working in finance.
+
+I primarily write code in Java but I've also been writing more and more JavaScript. In the past I've worked with C++, Python and PHP.
+
+
