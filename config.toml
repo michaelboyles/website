@@ -52,6 +52,11 @@ icon = "fa-envelope"
 title = "Email"
 url = "mailto:michael@boyl.es"
 
+[[params.socialIcons]]
+icon = "fa-file"
+title = "CV"
+url = "https://latexonline.cc/compile?git=https%3A%2F%2Fgithub.com%2Fmichaelboyles%2Fwebsite&target=static%2Fdocs%2Fcv.tex&command=xelatex&trackId=1598651052286"
+
 ## Menu items
 
 [menu]
