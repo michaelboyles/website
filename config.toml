@@ -6,6 +6,8 @@ theme = "anatole"
 summarylength = 10
 enableEmoji = true
 enableRobotsTXT = true
+# Annoying aspect of GitHub pages, don't get much choice in the name 
+publishDir = "docs"
 
 # Enable Disqus
 #disqusShortname = ""

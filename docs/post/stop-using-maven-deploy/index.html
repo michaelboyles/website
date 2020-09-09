@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" data-theme=""><head>
+    <title> Michael Boyles | Stop Using Maven Deploy </title>
+    <meta charset="utf-8"><meta name="generator" content="Hugo 0.74.3" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <meta name="description" content="London, UK">
+    
+    <link rel="stylesheet" href="https://boyl.es/css/style.min.ef1c26beeb41dc113b0b2c514197bdbb73a61c7f832ddaeb309ba7e151912707.css" integrity="sha256-7xwmvutB3BE7CyxRQZe9u3OmHH&#43;DLdrrMJun4VGRJwc=" crossorigin="anonymous" type="text/css"><link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    
+    <link rel="shortcut icon" href="https://boyl.es/favicons/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://boyl.es/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://boyl.es/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://boyl.es/favicons/favicon-16x16.png">
+    <link rel="canonical" href="https://boyl.es/post/stop-using-maven-deploy/">
+    
+    
+    <script type="text/javascript" src="https://boyl.es/js/anatole-header.min.7e2fc0724240b28c6e214687e73a4a6eb6c196bbace546b9dc86e94cca120b5c.js" integrity="sha256-fi/AckJAsoxuIUaH5zpKbrbBlrus5Ua53IbpTMoSC1w=" crossorigin="anonymous"></script>
+    <meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://boyl.es/images/site-feature-image.png"/>
+
+<meta name="twitter:title" content="Stop Using Maven Deploy"/>
+<meta name="twitter:description" content="mvn deploy is the final phase of Maven&rsquo;s build lifecycle. It’s responsible for uploading the artifacts produced by the previous phases of the build to an artifact repository like Nexus where they can be stored and accessed by other dependent projects, or used as part of an automated deployment."/>
+
+</head><body><div class="sidebar animated fadeInDown">
+    <div class="logo-title">
+      <div class="title">
+        <img src="https://boyl.es/images/portrait-square.png" alt="profile picture">
+        <h3 title=""><a href="/">Michael Boyles</a></h3>
+        <div class="description">
+          <p>London, UK</p>
+        </div>
+      </div>
+    </div>
+    <ul class="social-links">
+        
+        <li>
+        <a href="https://github.com/michaelboyles" rel="me" aria-label="GitHub">
+          <i class="fa fa-2x fa-github" aria-hidden="true"></i>
+        </a>          
+        </li>
+
+        
+        <li>
+        <a href="https://stackoverflow.com/users/1898563/michael" rel="me" aria-label="StackOverflow">
+          <i class="fa fa-2x fa-stack-overflow" aria-hidden="true"></i>
+        </a>          
+        </li>
+
+        
+        <li>
+        <a href="https://www.linkedin.com/in/boylesm/" rel="me" aria-label="Linkedin">
+          <i class="fa fa-2x fa-linkedin" aria-hidden="true"></i>
+        </a>          
+        </li>
+
+        
+        <li>
+        <a href="mailto:michael@boyl.es" rel="me" aria-label="Email">
+          <i class="fa fa-2x fa-envelope" aria-hidden="true"></i>
+        </a>          
+        </li>
+
+        
+        <li>
+        <a href="https://latexonline.cc/compile?git=https%3A%2F%2Fgithub.com%2Fmichaelboyles%2Fwebsite&amp;target=static%2Fdocs%2Fcv.tex&amp;command=xelatex&amp;trackId=1598651052286" rel="me" aria-label="CV">
+          <i class="fa fa-2x fa-file" aria-hidden="true"></i>
+        </a>          
+        </li>
+
+        
+    </ul>
+    <div class="footer">
+        <div class="by_farbox">&copy; Michael Boyles 2020 </div>
+      </div>
+    </div>
+</div><div class="main">
+            <div class="page-top animated fadeInDown">
+    <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false" >
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    <ul class="nav" id="navMenu">
+        
+        
+        
+        <li><a  href="/" title="">Home</a></li>
+        
+        
+        <li><a  href="/about/" title="">About</a></li>
+        
+        
+        <li class="theme-switch-item">
+        <a class="theme-switch" title="Switch Theme">
+            <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+        </a>
+        </li>
+    </ul>
+</div>
+
+            <div class="autopagerize_page_element">
+                <div class="content">
+<div class="post animated fadeInDown">
+    <div class="post-content">
+
+      <div class="post-title">
+        <h3>Stop Using Maven Deploy
+        </h3>
+        
+        <div class="info">
+          <i class="fa fa-sun-o"></i>
+          <span class="date">Mon, Aug 24, 2020</span>
+          <i class="fa fa-clock-o"></i><span class="reading-time">3-minute read</span>
+        </div>
+        
+        </div>
+
+    <p><a href="https://maven.apache.org/plugins/maven-deploy-plugin/"><code>mvn deploy</code></a> is the final phase of <a href="https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html">Maven&rsquo;s build lifecycle</a>. It’s responsible for uploading the artifacts produced by the previous phases of the build to an artifact repository like <a href="https://www.sonatype.com/product-nexus-repository">Nexus</a> where they can be stored and accessed by other dependent projects, or used as part of an automated deployment.</p>
+<p>Maven is a build tool. Its responsibility should be to build the application. Tacking on an artifact upload step at the end seems convenient and harmless enough, but in practice I’ve found that I prefer to avoid using it.</p>
+<p>The major problem as I see it is that there is that it’s difficult to differentiate between a developer’s machine and the <a href="https://en.wikipedia.org/wiki/List_of_build_automation_software#Continuous_integration">build server</a>. There should be no reason to upload artifacts from a development machine, and you should try your best to make doing so absolutely impossible. If you don&rsquo;t then it becomes possible to circumvent any quality checks that are normally enforced by the build server. It even allows you to push a build containing code that was never committed to source control. If you end up in that situation, good luck decompiling your JARs to try to work out what changes were included.</p>
+<p>One solution is to enforce authentication on your artifact repository, which of course you should be doing anyway. If you have a username and password which only the build server knows, it would be impossible to upload artifacts from anywhere else.</p>
+<p>The problem I’ve found with this is that Maven does not make it easy to keep the password secret. I’ve often seen my colleagues sharing passwords for artifact repos in plaintext or, worse, checking them into source control.</p>
+<p>Maven does provide <a href="https://maven.apache.org/guides/mini/guide-encryption.html">a way to encrypt passwords</a> but it relies on keeping configuration files on the local filesystem, and keeping those files secret; you could try changing the unix file permissions for those files but I find that unreliable. It can be a hassle to update the passwords if the files exist on multiple runners. They could also be easily missed if you spin up a new build server and have nothing to document that they’re required.</p>
+<p>The solution which has worked for me is to move the artifact upload step to a separate stage of the build pipeline, after Maven has completed. I don&rsquo;t use any <code>&lt;distributionManagement&gt;</code>. I use Jenkins and the <a href="https://plugins.jenkins.io/nexus-artifact-uploader/">Nexus Artifact Uploader plugin</a>. The only real downside is having to manually enumerate the artifacts. In projects with a few modules it can get a bit tedious, but I’ve sometimes appreciated the fine-grained control of being able to exclude a module or two by simply omitting them from the list.</p>
+<p>The section of my <a href="https://www.jenkins.io/pipeline/getting-started-pipelines/">build pipeline</a> responsible for deployment will often look something like this:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-groovy" data-lang="groovy">nexusArtifactUploader <span style="color:#f92672">{</span>
+    nexusVersion<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;nexus3&#39;</span><span style="color:#f92672">)</span>
+    protocol<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;https&#39;</span><span style="color:#f92672">)</span>
+    nexusUrl<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;our-nexus-host&#39;</span><span style="color:#f92672">)</span>
+    groupId<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;com.mycorp&#39;</span><span style="color:#f92672">)</span>
+    version<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;1.2.3&#39;</span><span style="color:#f92672">)</span>
+    repository<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;my-repo-snapshots&#39;</span><span style="color:#f92672">)</span>
+    credentialsId<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;44620c50-1589-4617-a677-7563985e46e1&#39;</span><span style="color:#f92672">)</span>
+    artifact <span style="color:#f92672">{</span>
+        artifactId<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;my-app&#39;</span><span style="color:#f92672">)</span>
+        type<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;jar&#39;</span><span style="color:#f92672">)</span>
+        file<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;target/my-app.jar&#39;</span><span style="color:#f92672">)</span>
+    <span style="color:#f92672">}</span>
+    artifact <span style="color:#f92672">{</span>
+        artifactId<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;my-app&#39;</span><span style="color:#f92672">)</span>
+        type<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;pom&#39;</span><span style="color:#f92672">)</span>
+        file<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;pom.xml&#39;</span><span style="color:#f92672">)</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>The advantage here is that <code>credentialsId</code> is a <em>reference</em> to a set of credentials but the mechanism by which those credentials are obtained is left up to the build server. I could store the password directly in Jenkins, or in a separate secrets manager like <a href="https://www.vaultproject.io/">HashiCorp Vault</a> (which is what we do). Either way, the credentials cannot be easily retrieved by a user, are easy to update, and their usage is fully documented in the pipeline definition.</p>
+<p>There are other advantages too. Splitting the artifact upload from the build means you’ll get a more granular view of where a pipeline has failed. If Maven and the upload are separate steps in the pipeline, then I can see quickly which step has failed and I know immediately where to start looking. If Maven were responsible for both, both failures would be conflated into a single step, and only the build output would reveal what went wrong.</p>
+
+    </div>
+    <div class="post-footer">
+      <div class="info">
+        
+        
+      </div>
+    </div>
+
+    
+           
+    
+</div>
+
+
+                </div>
+            </div>
+        </div>
+</body>
+
+
+
+<script type="text/javascript" src="https://boyl.es/js/jquery.min.86b1e8f819ee2d9099a783e50b49dff24282545fc40773861f9126b921532e4c.js" integrity="sha256-hrHo&#43;BnuLZCZp4PlC0nf8kKCVF/EB3OGH5EmuSFTLkw=" crossorigin="anonymous"></script>
+
+
+
+
+<script type="text/javascript" src="https://boyl.es/js/bundle.min.0f9c74cb78f13d1f15f33daff4037c70354f98acfbb97a6f61708966675c3cae.js" integrity="sha256-D5x0y3jxPR8V8z2v9AN8cDVPmKz7uXpvYXCJZmdcPK4=" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="https://boyl.es/js/medium-zoom.min.92f21c856129f84aeb719459b3e6ac621a3032fd7b180a18c04e1d12083f8aba.js" integrity="sha256-kvIchWEp&#43;ErrcZRZs&#43;asYhowMv17GAoYwE4dEgg/iro=" crossorigin="anonymous"></script></html></body>
+
+</html>
