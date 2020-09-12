@@ -2,6 +2,7 @@
 author = "Michael Boyles"
 title = "Next month StackOverflow will pass a catastrophic point in its history"
 date = "2020-09-09"
+tags = ["tech industry", "stats"]
 +++
 
 I’ve used StackOverflow a lot. I’m not just talking about landing there from Google; I’ve been regularly participating for about four years. Since then I’ve answered about 1000 questions, mostly under the Java tag.

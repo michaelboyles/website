@@ -2,6 +2,7 @@
 author = "Michael Boyles"
 title = "Stop Using Maven Deploy"
 date = "2020-08-24"
+tags = ["build automation", "ci"]
 +++
 
 

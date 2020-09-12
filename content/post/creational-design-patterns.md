@@ -2,6 +2,7 @@
 author = "Michael Boyles"
 title = "Design Patterns Reviewed - Part 1: Creational"
 date = "2020-08-25"
+tags = ["design"]
 +++
 
 This is the first post in a series in which I’ll be reviewing [software design patterns](https://en.wikipedia.org/wiki/Software_design_pattern), giving my opinions on which you should use and which you should avoid. I've grouped them into the same categories as they are in the Gang of Four’s [*Design Patterns*](https://www.amazon.co.uk/Design-patterns-elements-reusable-object-oriented/dp/0201633612). The first group I’ll be covering are [creational patterns](https://en.wikipedia.org/wiki/Creational_pattern). These are all strategies that you can choose when deciding how to instantiate an object.
