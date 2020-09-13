@@ -4,6 +4,12 @@ body, html {
   color: #373737;
   font-family: 'Noto Serif', serif; }
 
+sup {
+  vertical-align: top;
+  font-size: 0.7em;
+  position: relative;
+  top: -7px; }
+
 a {
   color: #3d7e9a;
   text-decoration: none; }
