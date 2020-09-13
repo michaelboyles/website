@@ -18,8 +18,38 @@
   </url>
   
   <url>
+    <loc>https://boyl.es/tags/stats/</loc>
+    <lastmod>2020-09-09T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://boyl.es/tags/</loc>
+    <lastmod>2020-09-09T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://boyl.es/tags/tech-industry/</loc>
+    <lastmod>2020-09-09T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://boyl.es/tags/design/</loc>
+    <lastmod>2020-08-25T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://boyl.es/post/creational-design-patterns/</loc>
     <lastmod>2020-08-25T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://boyl.es/tags/build-automation/</loc>
+    <lastmod>2020-08-24T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://boyl.es/tags/ci/</loc>
+    <lastmod>2020-08-24T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -38,10 +68,6 @@
   
   <url>
     <loc>https://boyl.es/tags/index/</loc>
-  </url>
-  
-  <url>
-    <loc>https://boyl.es/tags/</loc>
   </url>
   
 </urlset>

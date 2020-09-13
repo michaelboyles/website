@@ -1,0 +1,110 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  color: #373737;
+  font-family: 'Noto Serif', serif; }
+
+a {
+  color: #3d7e9a;
+  text-decoration: none; }
+  a:hover {
+    text-decoration: underline; }
+
+hr {
+  border: 0;
+  height: 1px;
+  background: #e6e6e6;
+  background-image: linear-gradient(to right, #e6e6e6, #f5f5f5, #e6e6e6); }
+
+.nav {
+  list-style: none;
+  margin: 0;
+  padding: 0; }
+  .nav li {
+    display: inline-block; }
+
+.social-icons {
+  list-style: none;
+  margin: 0;
+  padding: 0; }
+  .social-icons li {
+    display: inline-block;
+    margin: 0 3px; }
+    .social-icons li i {
+      font-size: 24px;
+      color: #373737; }
+      .social-icons li i:hover {
+        color: #3d7e9a; }
+
+/*code blocks*/
+.highlight {
+  border-left: 3px solid #3d7e9a;
+  background-color: #fbfbfb;
+  padding: 25px 0 25px 30px; }
+  .highlight pre {
+    margin: 0;
+    background: none !important; }
+
+.tags {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 15px;
+  line-height: 1em; }
+  .tags .tag {
+    display: inline-block;
+    margin-right: 5px; }
+    .tags .tag a {
+      display: block;
+      padding: 5px 8px;
+      background: #dedede;
+      color: #373737;
+      text-decoration: none;
+      border-radius: 3px; }
+      .tags .tag a:hover {
+        background: #c5c5c5; }
+
+.main, .header {
+  width: 810px;
+  margin: 0 auto;
+  padding: 0 20px; }
+
+@media only screen and (max-width: 850px) {
+  .main, .header {
+    width: 100%;
+    box-sizing: border-box; } }
+
+.header {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 20px; }
+  .header .nav {
+    margin: 20px 0; }
+
+.post, .page {
+  font-size: 18px;
+  line-height: 1.6em; }
+  .post .title, .page .title {
+    margin: 0 0 5px 0;
+    font-size: 35px;
+    line-height: 1.2em; }
+    .post .title a, .page .title a {
+      color: #373737;
+      text-decoration: none; }
+  .post .meta, .page .meta {
+    display: flex; }
+    .post .meta .date, .page .meta .date {
+      display: block;
+      margin-right: 15px;
+      line-height: 24px;
+      color: #656565;
+      font-size: 15px; }
+  .post .summary img, .post .content img, .page .summary img, .page .content img {
+    max-width: 100%; }
+  .post .continue-reading, .page .continue-reading {
+    display: inline-block;
+    margin-bottom: 40px; }
+
+.post-list .posts-by-year {
+  list-style: none; }
