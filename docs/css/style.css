@@ -30,7 +30,8 @@ hr {
   margin: 0;
   padding: 0; }
   .nav li {
-    display: inline-block; }
+    display: inline-block;
+    margin: 0 3px; }
 
 .social-icons {
   list-style: none;
@@ -38,7 +39,7 @@ hr {
   padding: 0; }
   .social-icons li {
     display: inline-block;
-    margin: 0 3px; }
+    margin: 0 6px; }
     .social-icons li i {
       font-size: 24px;
       color: #373737; }
@@ -115,5 +116,5 @@ hr {
     display: inline-block;
     margin-bottom: 40px; }
 
-.post-list .posts-by-year {
+.post-list .posts-by-year, .taxonomy-list {
   list-style: none; }
