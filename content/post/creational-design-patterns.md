@@ -7,6 +7,8 @@ tags = ["design"]
 
 This is the first post in a series in which I’ll be reviewing [software design patterns](https://en.wikipedia.org/wiki/Software_design_pattern), giving my opinions on which you should use and which you should avoid. I've grouped them into the same categories as they are in the Gang of Four’s [*Design Patterns*](https://www.amazon.co.uk/Design-patterns-elements-reusable-object-oriented/dp/0201633612). The first group I’ll be covering are [creational patterns](https://en.wikipedia.org/wiki/Creational_pattern). These are all strategies that you can choose when deciding how to instantiate an object.
 
+<!--more-->
+
 In alphabetical order, they are:
 
 ## [Abstract factory](https://en.wikipedia.org/wiki/Abstract_factory_pattern)
@@ -72,6 +74,7 @@ I think that most objects should be immutable, so I’ve never found a use for t
 
 Probably the worst pattern. A singleton is a form of global state. A dependency on one makes classes hard to test because you can’t easily mock or stub its methods. Don’t use it. Rely on dependency injection instead.
 
+---
 
-Part 2 will take a look at [structural patterns](https://en.wikipedia.org/wiki/Structural_pattern).
+[Part 2 - Structural Design Patterns](/post/structural-design-patterns)
 
