@@ -6,6 +6,6 @@ Feel free to submit an [issue](https://github.com/michaelboyles/website/issues) 
 
 To build and run it locally: 
 
- - [Install Hugo](https://gohugo.io/getting-started/installing/). You need the extended version for SASS support. I use `0.74.3`.
+ - [Install Hugo](https://gohugo.io/getting-started/installing/). You need the extended version for SASS support. I use `0.85.0`.
  - In the root of this repo, run `hugo server`
  - Open http://localhost:1313/
