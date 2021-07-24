@@ -82,16 +82,17 @@ Boolean(someObject) ?
     : null
 ```
 
-I also added support for `<Else>` conditions which I don’t think would be possible at all without a transformation. I opted to make the `<Else>` nested because it seemed to provide a logical association between the two that would otherwise be missing. It would also be possible to have the opening `<Else>` follow the closing `</If>`, at the same level. I’m coming around to that idea more so maybe I’ll change it.
+I also added support for `<Else>` conditions which I don’t think would be possible at all without a transformation. The `<Else>` block must immediately follow the closing `</If>`, excluding whitespace[^3].
 
 ```jsx
 <If condition={someCondition}>
     <div>The condition is true</div>
-    <Else>
-       <div>The condition is false</div>
-    </Else>
 </If>
+<Else>
+    <div>The condition is false</div>
+</Else>
 ```
+
 
 By using transformation, we can achieve the expressiveness we want but without losing the desirable properties of short-circuiting.
 
@@ -99,5 +100,6 @@ The [full code is available on GitHub](https://github.com/michaelboyles/jsx-if).
 
 [^1]:  The three attributes arranged vertically are done so for the sake of the example. In this specific case, it might be cleaner to place them all on one line. In reality, seeing 10 or more attributes is not uncommon so this vertical style is used a lot.
 
-[^2]: In other languages [like Kotlin](https://kotlinlang.org/docs/control-flow.html), `if` can act as an expression. This effectively removes the need for a conditional operator.
+[^2]: In other languages [like Kotlin](https://kotlinlang.org/docs/control-flow.html), `if` can act as an expression. This effectively removes the need for a conditional operator
 
+[^3]: This unfortunately means you can’t add a comment between the two blocks such as `{/*Otherwise, do this*/}`. I could whitelist that specific case but it doesn’t seem important and I’d rather keep the behaviour simple.
