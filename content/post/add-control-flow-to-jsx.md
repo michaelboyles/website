@@ -2,6 +2,7 @@
 author = "Michael Boyles"
 title = "Adding control flow to JSX with TypeScript"
 date = "2021-06-13"
+description = "In this post, I explain how if-else statements can be added to JSX in a React project"
 tags = ["project"]
 location = "Chester, England"
 +++

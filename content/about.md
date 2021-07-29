@@ -1,6 +1,6 @@
 +++
 title = "About"
-description = "About me"
+description = "I'm a Java developer based in London, with a focus on source code and bytecode generation"
 date = "2020-02-28"
 author = "Michael Boyles"
 +++

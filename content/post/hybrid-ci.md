@@ -2,6 +2,7 @@
 author = "Michael Boyles"
 title = "Hybrid CI"
 date = "2020-10-18"
+description = "An approach to using two CI systems to get the best of both worlds"
 tags = ["build automation", "ci"]
 +++
 

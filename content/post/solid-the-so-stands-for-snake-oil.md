@@ -1,8 +1,8 @@
 +++
 author = "Michael Boyles"
 title = "SOLID: the 'SO' stands for Snake Oil"
-description = "Foo bar"
 date = "2020-09-13"
+description = "SOLID is possibly the most over-hyped concept in all of software engineering. In this post I explain why."
 tags = ["design"]
 +++
 

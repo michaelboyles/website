@@ -2,6 +2,7 @@
 author = "Michael Boyles"
 title = "Next month StackOverflow will pass a catastrophic point in its history"
 date = "2020-09-09"
+description = "StackOverflow's answerers' participation is dwindling - I pull some stats to show how dire the situation really is"
 tags = ["tech industry", "stats"]
 +++
 

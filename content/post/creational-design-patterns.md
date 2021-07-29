@@ -2,6 +2,7 @@
 author = "Michael Boyles"
 title = "Design Patterns Reviewed - Part 1: Creational"
 date = "2020-08-25"
+description = "A review of the creational design patterns used in software development"
 tags = ["design"]
 +++
 

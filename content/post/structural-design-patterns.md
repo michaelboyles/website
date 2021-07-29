@@ -2,6 +2,7 @@
 author = "Michael Boyles"
 title = "Design Patterns Reviewed - Part 2: Structural"
 date = "2020-10-25"
+description = "A review of the structural design patterns used in software development"
 tags = ["design"]
 +++
 

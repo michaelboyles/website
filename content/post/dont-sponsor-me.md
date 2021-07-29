@@ -2,6 +2,7 @@
 author = "Michael Boyles"
 title = "Don't Sponsor Me"
 date = "2020-10-31"
+description = "There seems to be a growing trend of software developers panhandling for donations. Whether it’s via GitHub Sponsors, Patreon or Ko-fi, a culture of entitlement is on the rise. Some even expect to be rewarded for their Stack Overflow answers. Good luck with that."
 tags = ["open source"]
 +++
 
