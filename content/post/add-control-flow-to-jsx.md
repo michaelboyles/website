@@ -97,7 +97,7 @@ I also added support for `<Else>` conditions which I don’t think would be poss
 
 By using transformation, we can achieve the expressiveness we want but without losing the desirable properties of short-circuiting.
 
-The [full code is available on GitHub](https://github.com/michaelboyles/jsx-if). The transformation itself is only ~150 lines.
+The [full code is available on GitHub](https://github.com/michaelboyles/if-jsx). The transformation itself is only ~150 lines.
 
 [^1]:  The three attributes arranged vertically are done so for the sake of the example. In this specific case, it might be cleaner to place them all on one line. In reality, seeing 10 or more attributes is not uncommon so this vertical style is used a lot.
 
