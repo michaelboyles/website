@@ -9,3 +9,8 @@ To build and run it locally:
  - [Install Hugo](https://gohugo.io/getting-started/installing/). You need the extended version for SASS support. I use `0.85.0`.
  - In the root of this repo, run `hugo server`
  - Open http://localhost:1313/
+
+To deploy to prod:
+
+ - `hugo --minify`
+ - Commit the `docs/` directory and push

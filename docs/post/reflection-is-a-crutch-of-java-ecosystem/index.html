@@ -1,0 +1,93 @@
+<!doctype html><html lang=en><head><title>Reflection is a crutch of the Java ecosystem | Michael Boyles</title><meta charset=utf-8><meta name=viewport content="width=device-width,minimum-scale=1,initial-scale=1"><meta name=description content="Java libraries have an over-reliance on reflection as a means to solving problems generically. In this post I explain how code generation might be a better solution."><meta name=generator content="Hugo 0.85.0"><link rel=stylesheet href=https://boyl.es/css/style.css integrity crossorigin=anonymous type=text/css><link rel=stylesheet href=https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css integrity=sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN crossorigin=anonymous type=text/css><link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel=stylesheet></head><body><div class=header><nav><ul class=nav><li><a href=/ title>Home</a></li><li><a href=/about/ title>About</a></li></ul></nav><ul class=social-icons><li><a href=https://github.com/michaelboyles rel=me title=GitHub aria-label=GitHub><i class="fa fa-github" aria-hidden=true></i></a></li><li><a href=https://stackoverflow.com/users/1898563/michael rel=me title=StackOverflow aria-label=StackOverflow><i class="fa fa-stack-overflow" aria-hidden=true></i></a></li><li><a href=https://www.linkedin.com/in/boylesm/ rel=me title=Linkedin aria-label=Linkedin><i class="fa fa-linkedin" aria-hidden=true></i></a></li><li><a href=mailto:michael@boyl.es rel=me title=Email aria-label=Email><i class="fa fa-envelope" aria-hidden=true></i></a></li><li><a href="https://latexonline.cc/compile?git=https%3A%2F%2Fgithub.com%2Fmichaelboyles%2Fwebsite&target=static%2Fdocs%2Fcv.tex&command=xelatex&trackId=1598651052286" rel=me title=CV aria-label=CV><i class="fa fa-file" aria-hidden=true></i></a></li></ul></div><div class=main><div class=post><h1 class=title>Reflection is a crutch of the Java ecosystem</h1><div class=meta><span class=date>4 October 2021</span>
+<span class=reading-time></span><ul class=tags><li class=tag><a href=/tags/design/ title="View more posts about design">design</a></li></ul></div><div class=content><p>Java gained traction because you could write code which could run anywhere, but it continues to be successful in a large
+part due to its fantastic ecosystem. Libraries like Spring, Hibernate and Gson are comparable to, if not better than,
+practically any equivalent tools available for other languages. However, they’ve helped popularise the idea that using
+<a href=https://www.oracle.com/technical-resources/articles/java/javareflection.html>reflection</a> is likely to be an intrinsic
+part of writing a Java library or framework. As Java developers, we’re being short-changed with solutions that force us
+to sacrifice strong typing and are impossible to debug.</p><p>For each of the popular libraries I’ve already mentioned — Spring, Hibernate and Gson — I’ll explain how an alternative
+implementation could remove the need for reflection and potentially result in more performant, less error-prone code.
+The examples are deliberately simple and are only intended to be illustrative of the general idea.</p><h2 id=gsonhttpsgithubcomgooglegson><a href=https://github.com/google/gson>Gson</a></h2><p>A basic case of deserializing some JSON with Gson looks like this:</p><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java>Book book = <span style=color:#00a>new</span> Gson().<span style=color:#1e90ff>fromJson</span>(
+    <span style=color:#a50>&#34;{\&#34;pages\&#34;: 123}&#34;</span>,
+    Book.<span style=color:#1e90ff>class</span>
+);
+</code></pre></div><p>Gson uses reflection to check what fields, methods and constructors are present in the provided class. It will create a
+new instance and perhaps invoke a setter for each property, or even access the fields directly.</p><p>The analysis may be somewhat slow (relative to other operations, at least) for the first invocation for each class but
+I expect that it will cache the result. A bigger problem is that <code>fromJson</code> necessarily has to accept any <code>Class</code>
+instance as an argument. I could pass <code>StringBuilder.class</code>, or <code>InputStream.class</code>, or any other garbage. You can’t
+necessarily tell by looking whether the argument represents a JSON object or not and it might fail at runtime.</p><p>Instead, Gson could generate a serializer and deserializer pair for each JSON class:</p><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=color:#888>@Generated</span>
+<span style=color:#00a>class</span> <span style=color:#0a0;text-decoration:underline>BookDeserializer</span>
+   <span style=color:#00a>implements</span> JsonDeserializer&lt;Book&gt;
+{
+   Book <span style=color:#0a0>fromJson</span>(String json) {
+       <span style=color:#aaa;font-style:italic>// jsonToTree from e.g. a parent class
+</span><span style=color:#aaa;font-style:italic></span>       JsonNode root = jsonToTree(json);
+       <span style=color:#00a>return</span> <span style=color:#00a>new</span> Book(
+           root.<span style=color:#1e90ff>getInt</span>(<span style=color:#a50>&#34;pages&#34;</span>)
+       );
+   }
+}
+
+<span style=color:#aaa;font-style:italic>// Sample usage
+</span><span style=color:#aaa;font-style:italic></span>Book book = <span style=color:#00a>new</span> BookDeserializer()
+    .<span style=color:#1e90ff>fromJson</span>(<span style=color:#a50>&#34;{\&#34;pages\&#34;: 123}&#34;</span>); 
+</code></pre></div><p>A <code>BookDeserializer</code> now only accepts <code>Book</code>s. There will be no such thing as a <code>StringBuilderDeserializer</code> so there’s
+no possibility I can try to create a <code>StringBuilder</code> from some JSON.</p><h2 id=hibernatehttpshibernateorgorm><a href=https://hibernate.org/orm/>Hibernate</a></h2><p>Hibernate is an <a href=https://en.wikipedia.org/wiki/Object%E2%80%93relational_mapping>ORM framework</a> which attempts to
+bridge the gap between an object-oriented application and the representation of those objects in a relational database.
+Hibernate operates on what it calls “entities”: in the simple case, a class would model a database table and an instance
+of that class would model a row.</p><p>Hibernate suffers from the same issues as Gson but, on top of that, its implementation makes it extremely tedious to
+debug. Because Hibernate has to be flexible enough to accept any possible input, what may seem like a simple operation —
+say, to insert a row — can balloon in complexity. There are likely many code paths which your application will never
+take and could be completely omitted in a generated implementation.</p><p>Generating an ORM implementation lets you lift the fundamental operations like constructing a SQL statement from deep
+within the library to a much higher level.</p><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=color:#888>@Generated</span>
+<span style=color:#00a>class</span> <span style=color:#0a0;text-decoration:underline>HibernateDB</span> {
+   <span style=color:#aaa;font-style:italic>// constructor
+</span><span style=color:#aaa;font-style:italic></span>
+   BooksTable <span style=color:#0a0>books</span>() {
+       <span style=color:#00a>return</span> <span style=color:#00a>new</span> BooksTable(entityManager);
+   }
+}
+
+<span style=color:#888>@Generated</span>
+<span style=color:#00a>class</span> <span style=color:#0a0;text-decoration:underline>BooksTable</span> <span style=color:#00a>implements</span> HibernateTable&lt;Book&gt; {
+   <span style=color:#00a>private</span> <span style=color:#00a>final</span> EntityManager entityManager;
+
+   <span style=color:#aaa;font-style:italic>// constructor
+</span><span style=color:#aaa;font-style:italic></span>
+   <span style=color:#0aa>void</span> <span style=color:#0a0>insert</span>(Book book) {
+       entityManager.<span style=color:#1e90ff>createNativeQuery</span>(<span style=color:#a50>&#34;INSERT INTO person (id, pages) VALUES (?,?)&#34;</span>)
+           .<span style=color:#1e90ff>setParameter</span>(1, book.<span style=color:#1e90ff>getId</span>())
+           .<span style=color:#1e90ff>setParameter</span>(2, book.<span style=color:#1e90ff>getPages</span>())
+           .<span style=color:#1e90ff>executeUpdate</span>();
+   }
+}
+
+<span style=color:#aaa;font-style:italic>// Sample usage
+</span><span style=color:#aaa;font-style:italic></span><span style=color:#00a>new</span> HibernateDB(SqlDialect.<span style=color:#1e90ff>ORACLE</span>, <span style=color:#a50>&#34;localhost&#34;</span>, 1234)
+   .<span style=color:#1e90ff>books</span>()
+   .<span style=color:#1e90ff>insert</span>(<span style=color:#00a>new</span> Book(123));
+</code></pre></div><h2 id=springhttpsspringio><a href=https://spring.io/>Spring</a></h2><p>Spring’s dependency injection happens when your application starts. It builds the dependency graph, determines the order
+in which components must be created, and wires everything together at runtime. There are plenty of potential issues that
+you can’t catch until you spin up your application, like a missing or cyclic dependency.</p><p>In a world running on Kubernetes or serverless architectures where cold starts are common, the time spent building this
+graph can be significant. I’ve written modular applications which relied on Spring’s dependency injection to dynamically
+pick up plugins, but most applications don’t require that functionality; most applications have the same dependency
+graph every time they run. A better approach for most people would be to analyze the dependency graph at compile-time
+and generate a class which acts as the glue.</p><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=color:#888>@Generated</span>
+<span style=color:#00a>class</span> <span style=color:#0a0;text-decoration:underline>MyDI</span> {
+    <span style=color:#00a>public</span> App <span style=color:#0a0>buildApp</span>() {
+        <span style=color:#00a>final</span> ComponentA aaa = <span style=color:#00a>new</span> ComponentA();
+        <span style=color:#00a>final</span> ComponentB bbb = <span style=color:#00a>new</span> ComponentB(aaa);
+        <span style=color:#00a>final</span> ComponentC ccc = <span style=color:#00a>new</span> ComponentC(aaa, bbb);
+        <span style=color:#00a>return</span> <span style=color:#00a>new</span> App(aaa, bbb, ccc);
+    }
+}
+</code></pre></div><p>Of course, Spring does much more than just dependency injection but <a href=https://micronaut.io/>Micronaut</a>’s authors are
+achieving a huge number of the same features without using reflection, often through similar generative methods.</p><h2 id=the-case-for-code-generation>The case for code generation</h2><p>One of the best things about generating code is that it lets us think about code structure in a completely different
+way. We usually feel uneasy about duplicating similar logic all over our codebase. It’s a maintenance nightmare. At a
+certain point, we tend towards more generic solutions but generic solutions can be confusing unless you understand the
+full context of the problem. A generative approach let’s us completely flip that on its head: how would you write your
+application differently if none of the disadvantages of duplication existed?</p><p>Of course, the complexity of creating a generic solution for a complex problem will never just disappear. All generating
+code does is shift the responsibility of supporting many different cases from the runtime library to a new generator
+component e.g. a Maven plugin. Thanks to libraries like <a href=https://github.com/square/javapoet>JavaPoet</a>, that needn’t be
+significantly more effort for a library author either, and the advantages can be huge. An interstitial, human-readable
+output gives users greater transparency about what a library is really doing and a more accessible entry-point for
+solving their own problems.</p></div></div></div></body></html>
