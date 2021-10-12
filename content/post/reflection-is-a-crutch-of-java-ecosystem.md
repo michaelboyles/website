@@ -9,14 +9,14 @@ location = "Chester, England"
 
 Java gained traction because you could write code which could run anywhere, but it continues to be successful in a large
 part due to its fantastic ecosystem. Libraries like Spring, Hibernate and Gson are comparable to, if not better than,
-practically any equivalent tools available for other languages. However, they’ve helped popularise the idea that using
+practically any equivalent tools available for other languages. However, they've helped popularise the idea that using
 [reflection](https://www.oracle.com/technical-resources/articles/java/javareflection.html) is likely to be an intrinsic
-part of writing a Java library or framework. As Java developers, we’re being short-changed with solutions that force us
+part of writing a Java library or framework. As Java developers, we're being short-changed with solutions that force us
 to sacrifice strong typing and are impossible to debug.
 
 <!--more-->
 
-For each of the popular libraries I’ve already mentioned — Spring, Hibernate and Gson — I’ll explain how an alternative
+For each of the popular libraries I've already mentioned — Spring, Hibernate and Gson — I'll explain how an alternative
 implementation could remove the need for reflection and potentially result in more performant, less error-prone code.
 The examples are deliberately simple and are only intended to be illustrative of the general idea.
 
@@ -36,7 +36,7 @@ new instance and perhaps invoke a setter for each property, or even access the f
 
 The analysis may be somewhat slow (relative to other operations, at least) for the first invocation for each class but
 I expect that it will cache the result. A bigger problem is that `fromJson` necessarily has to accept any `Class`
-instance as an argument. I could pass `StringBuilder.class`, or `InputStream.class`, or any other garbage. You can’t
+instance as an argument. I could pass `StringBuilder.class`, or `InputStream.class`, or any other garbage. You can't
 necessarily tell by looking whether the argument represents a JSON object or not and it might fail at runtime.
 
 Instead, Gson could generate a serializer and deserializer pair for each JSON class:
@@ -60,7 +60,7 @@ Book book = new BookDeserializer()
     .fromJson("{\"pages\": 123}"); 
 ```
 
-A `BookDeserializer` now only accepts `Book`s. There will be no such thing as a `StringBuilderDeserializer` so there’s
+A `BookDeserializer` now only accepts `Book`s. There will be no such thing as a `StringBuilderDeserializer` so there's
 no possibility I can try to create a `StringBuilder` from some JSON.
 
 ## [Hibernate](https://hibernate.org/orm/)
@@ -110,13 +110,13 @@ new HibernateDB(SqlDialect.ORACLE, "localhost", 1234)
 
 ## [Spring](https://spring.io/)
 
-Spring’s dependency injection happens when your application starts. It builds the dependency graph, determines the order
+Spring's dependency injection happens when your application starts. It builds the dependency graph, determines the order
 in which components must be created, and wires everything together at runtime. There are plenty of potential issues that 
-you can’t catch until you spin up your application, like a missing or cyclic dependency.
+you can't catch until you spin up your application, like a missing or cyclic dependency.
 
 In a world running on Kubernetes or serverless architectures where cold starts are common, the time spent building this
-graph can be significant. I’ve written modular applications which relied on Spring’s dependency injection to dynamically
-pick up plugins, but most applications don’t require that functionality; most applications have the same dependency
+graph can be significant. I've written modular applications which relied on Spring's dependency injection to dynamically
+pick up plugins, but most applications don't require that functionality; most applications have the same dependency
 graph every time they run. A better approach for most people would be to analyze the dependency graph at compile-time
 and generate a class which acts as the glue.
 
@@ -132,20 +132,20 @@ class MyDI {
 }
 ```
 
-Of course, Spring does much more than just dependency injection but [Micronaut](https://micronaut.io/)’s authors are
+Of course, Spring does much more than just dependency injection but [Micronaut](https://micronaut.io/)'s authors are
 achieving a huge number of the same features without using reflection, often through similar generative methods.
 
 ## The case for code generation
 
 One of the best things about generating code is that it lets us think about code structure in a completely different
-way. We usually feel uneasy about duplicating similar logic all over our codebase. It’s a maintenance nightmare. At a
+way. We usually feel uneasy about duplicating similar logic all over our codebase. It's a maintenance nightmare. At a
 certain point, we tend towards more generic solutions but generic solutions can be confusing unless you understand the
-full context of the problem. A generative approach let’s us completely flip that on its head: how would you write your
+full context of the problem. A generative approach lets us completely flip that on its head: how would you write your
 application differently if none of the disadvantages of duplication existed?
 
 Of course, the complexity of creating a generic solution for a complex problem will never just disappear. All generating
-code does is shift the responsibility of supporting many different cases from the runtime library to a new generator
-component e.g. a Maven plugin. Thanks to libraries like [JavaPoet](https://github.com/square/javapoet), that needn’t be
+code does is shift the responsibility of supporting multiple use-cases from the runtime library to a new generator
+component e.g. a Maven plugin. Thanks to libraries like [JavaPoet](https://github.com/square/javapoet), that needn't be
 significantly more effort for a library author either, and the advantages can be huge. An interstitial, human-readable
 output gives users greater transparency about what a library is really doing and a more accessible entry-point for
 solving their own problems.
