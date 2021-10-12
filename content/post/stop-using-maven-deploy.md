@@ -1,6 +1,6 @@
 +++
 author = "Michael Boyles"
-title = "Stop Using Maven Deploy"
+title = "Stop using Maven deploy"
 date = "2020-08-24"
 description = "Maven's lifecycle is fundementally broken. In this post I explain why you should avoid deploying via Maven's deploy plugin." 
 tags = ["build automation", "ci"]
