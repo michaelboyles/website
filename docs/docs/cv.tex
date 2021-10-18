@@ -4,77 +4,147 @@
 
 \usepackage{parskip}
 \setlength{\parindent}{0pt}
+\usepackage[none]{hyphenat}
 
 \usepackage{hyperref}
+\usepackage[dvipsnames]{xcolor}
 \hypersetup{
     colorlinks=true,
-    urlcolor=blue
+    urlcolor=Blue
 }
 
+\pagenumbering{gobble}
+
+\usepackage{enumitem}
+\setlist[itemize]{leftmargin=8pt}
+
+\usepackage{setspace}
+
 \begin{document}
-\begin{minipage}[t]{0.24\linewidth}
+\setstretch{1.2}
+
+\begin{minipage}[t][\textheight]{0.24\linewidth}
+\raggedright
 \section*{Michael Lewis Boyles}
 
-\vspace{0.2cm}I’m a software developer with a passion for writing great software. I’m outgoing, self-motivated and ambitious. I’m an advocate for open-source software, object-oriented programming and XP practices. 
+I’m a software developer based in London. I'm primarily a Java developer but I've been expanding into frontend tech. I'm currently interested in code generation and transformation, especially for framework development.
 
-\vspace{0.2cm}I’ve always had a natural aptitude for programming and consistently received excellent grades in the programming modules I studied as part of my degree.
+\section*{Open Source}
 
-\vspace{0.2cm}I pride myself on my ability to communicate ideas well and am always happy to help others. In my spare time I enjoy answering questions on StackOverflow, where I have 30k reputation points, mostly in the Java tag.
+\href{https://github.com/michaelboyles/redcr}{\textbf{Redcr}} v0.0.1\\
+TypeScript, Node, AWS\\
+\vspace{0.2cm}Compile-time code transformation for Redux reducers
 
-\vspace{0.2cm}I’ve led successful teams in both my professional and academic life, as well as functioned as a helpful and productive team member. I also work well independently, as I was required to do when freelancing.
+\vspace{0.2cm}\href{https://github.com/michaelboyles/flamewars}{\textbf{Flamewars}} (WIP)\\
+TypeScript, Node, AWS\\
+\vspace{0.2cm}Serverless comment engine
 
-\vspace{0.2cm}Aside from the Internet and technology, my big passion is music. I play guitar and bass, and sometimes record. I’m also enthusiastic about film and photography.
+\vspace{0.2cm}\href{https://github.com/michaelboyles/dgs-codegen-maven-plugin}{\textbf{dgs-codegen-maven-plugin}} v1.3.0\\
+Java, Maven\\
+\vspace{0.2cm}Maven plugin for generating classes for Netflix's DGS GraphQL framework
 
-\vspace{0.2cm}Thanks for considering my application. I hope to hear from you soon.
+\vspace{0.2cm}\textbf{Maven contributor}\\
+09/2020 - Present\\
+\vspace{0.2cm}11 accepted pull requests, 4 open
 
-\section*{Get In Touch}
+\vfill
+\section*{Contact}
 
-W: \href{https://boyl.es}{https://boyl.es}\\
-E: \href{mailto:michael@boyl.es}{michael@boyl.es}
+\begin{tabular}{cl}
+E: & \href{mailto:michael@boyl.es}{michael@boyl.es} \\
+W: & \href{https://boyl.es}{https://boyl.es} \\
+\end{tabular}
 
 \end{minipage}
 \hspace{0.5cm}
 \begin{minipage}[t]{0.35\linewidth}
-\section*{Apr 2017 - Present}
-\textbf{Senior Developer}\\
-BGC Partners
+\section*{Work History}
+\textbf{Senior Developer}, BGC Partners \hfill 03/2020 - Present
 
-\vspace{0.3cm}Java, Spring Boot, Oracle, JavaScript, React
+\vspace{0.3cm}TypeScript, React, Redux, Java, Spring Boot
 
-\vspace{0.3cm}I’ve been responsible for developing and extending BGC and GFI Electronic and Hybrid Trading Systems, one for fixed income, and one for FX. Mostly I’ve been building FIX API transformers: microservices which allow clients to interface with our trading systems without implementing our spec. As part of this, I contributed to the design and development of an annotation-based framework built around QuickFIX/J. These FIX transformers are Spring Boot projects which make heavy use of Java 8 features and are built with Maven via Bamboo. I’ve developed these services for a number of 3rd party buy-side execution and order management systems and investment banks.
+\vspace{0.3cm}
+\begin{itemize}
+  \item Led project to rewrite FX trading system UI
+    \begin{itemize}
+      \item Java/Spring Boot backend, Microservice architecture
+      \item Designed and documented services and APIs
+    \end{itemize}
+  \item Created many internal tools and shared libs: database management tool, JavaDoc server, SSL cert portal, etc.
+  \item Contributed to build automation, CI configuration, and automated deployments
+  \item Profiled \& optimized performance on both front- and back-end (React DevTools, YourKit)
+  \item Interviewed prospective employees
+\end{itemize}
 
-\section*{Sep 2015 - Apr 2017}
-\textbf{Graduate Software Engineer}\\
-Hewlett Packard Enterprise
+\vspace{0.3cm}
+\textbf{Developer}, BGC Partners \hfill 04/2017 - 03/2020
 
-\vspace{0.3cm}After graduating, I worked on a mission planning system used by the RAF. This legacy system was developed in C, C++ and Python, following the Scrum methodology. We followed rigorous development practices: unit/integration testing, static analysis, code reviews, performance profiling.
+\vspace{0.3cm}
+Java, Spring Boot, Oracle DB, QuickFIX/J
 
-\vspace{0.3cm}I was selected as part of a very small team to design a prototype v2 in Java to be used as part of a pitch for additional investment. The tech lead of this project was impressed with my work and described it as outstanding.
+\vspace{0.3cm}
+\begin{itemize}
+  \item Worked on 2 trading systems trading various asset classes
+  \item Designed and developed a constraint solver to calculate contract dates for FX products
+  \item Developed FIX adaptors to integrate with APIs of Goldman Sachs, JPMorgan, UBS, and others
+  \item Investigated \& debugged prod issues as 3rd line support
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{Graduate Software Engineer}, HP \hfill 09/2015 - 04/2017
+
+\vspace{0.3cm}
+C, C++, Java, LuciadLightspeed
+
+\vspace{0.3cm}
+\begin{itemize}
+  \item Developed a mission planning system used by the RAF, a monolithic geospatial application
+  \item Fixed bugs and added new features
+  \item Debugged memory leaks with Valgrind 
+  \item Developed prototype v2 in Java as part of a small team
+\end{itemize}
+
 \end{minipage}
 \hspace{0.5cm}
 \begin{minipage}[t]{0.35\linewidth}
-\section*{2013 - 2014}
-\textbf{Web Developer}\\
-West Digital Marketing
+\textbf{Developer}, West Digital Marketing \hfill 04/2014 - 06/2015
 
 \vspace{0.3cm}PHP, HTML5, JavaScript, MySQL
 
-\vspace{0.3cm}An industry placement between the second and third year of my degree. The job involved , email marketing and web design and development.
+\vspace{0.3cm}
+\begin{itemize}
+  \item Sandwich year industry placement
+  \item Developed numerous sites using a proprietary templating framework, mostly brochure websites and e-commerce
+  \item Designed, built and distributed responsive, mobile-first HTML email campaigns
+  \item Used Photoshop to produce design proposals for clients
+\end{itemize}
 
-\section*{2011 - 2015}
-BSc (Hons) Computer Science - First Class\\
-\textbf{Newcastle University}
+\section*{Education}
+\textbf{BSc Computer Science}, 1st class, Newcastle University
+2011 - 2015
 
-\vspace{0.3cm}The course was primarily taught in Java, with a strong theoretical background. I studied modules in cryptography, graphics (OpenGL) and networking. I was also presented with the Netcraft Programming Award for achieving amongst the highest marks in the programming modules in first year. In second year I was the leader of a software engineering team project in which I was able to lead the team to a high first class mark in the module.
+\vspace{0.3cm}
+\begin{itemize}
+  \item Course was taught in Java with a strong theoretical basis
+  \item Modules in cryptography, graphics and networking
+  \item Led a group project to develop an Android app to achieve a 1st class mark
+  \item Netcraft Programming Award 2012
+\end{itemize}
 
 \section*{Technologies}
 
 \textbf{Languages:}\\
-\textbf{Advanced:} Java, \textbf{Proficient:} JavaScript, C++, PHP
+\textbf{Advanced:} Java, \textbf{Proficient:} TypeScript, C++, PHP
 
-\textbf{Web:} JavaScript, React, HTML, Sass\\
+\textbf{Web:} Webpack, React, Redux, Sass\\
 \textbf{Databases:} Oracle, MySQL, DynamoDB\\
 \textbf{OS:} Windows, Linux
+
+\section*{Hobbies and Interests}
+
+Guitar, music production, fitness, board games,
+\\Japanese language (beginner), film, Arsenal FC
+
 \end{minipage}
 
 \end{document}

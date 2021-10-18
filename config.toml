@@ -9,12 +9,6 @@ enableRobotsTXT = true
 # Annoying aspect of GitHub pages, don't get much choice in the name 
 publishDir = "docs"
 
-# Enable Disqus
-#disqusShortname = ""
-
-# Google Analytics
-#googleAnalytics = "UA-123-45"
-
 [params]
 title = "Michael Boyles"
 author = "Michael Boyles"
@@ -27,6 +21,9 @@ customJs = []
 mainSections = ["post"]
 homepageTypes = ["post"]
 images = ["images/site-feature-image.png"]
+# Enable Comments
+flamewarsapiurl = "https://rgry1shcqe.execute-api.eu-west-2.amazonaws.com/default"
+googleClientId = "164705233134-ahoqn1p8em908f190tjgluh2fq6alqo5.apps.googleusercontent.com"
 
 ## Math settings
 [params.math]
