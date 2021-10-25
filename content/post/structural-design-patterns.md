@@ -1,6 +1,6 @@
 +++
 author = "Michael Boyles"
-title = "Design patterns reviewed - part 2: structural"
+title = "Design patterns reviewed #2: structural"
 date = "2020-10-25"
 description = "A review of the structural design patterns used in software development"
 tags = ["design"]
@@ -122,12 +122,11 @@ quite similar to a decorator. The book addresses this and suggests that one majo
 application of the pattern.
 
 I don’t really agree that a different intent means it is deserving of a distinct pattern, especially given that they
-present multiple variations on a single pattern several times elsewhere. But I can sympathise with the struggle of an
-author to meet their word count - what do you think I'm doing right now? They managed to get an extra 15 pages of
-material out of the same idea and all I managed was one lousy paragraph.
+present multiple variations on a single pattern several times elsewhere. This will become a common theme in the
+behavioural patterns coming up.
 
 ---
 
 [Part 1 - Creational Design Patterns](/post/creational-design-patterns/)
 
-Part 3 will be on Behavioural Design Patterns
+[Part 3 - Behavioural Design Patterns](/post/behavioural-design-patterns/)

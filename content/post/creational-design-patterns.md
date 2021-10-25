@@ -1,6 +1,6 @@
 +++
 author = "Michael Boyles"
-title = "Design patterns reviewed - part 1: creational"
+title = "Design patterns reviewed #1: creational"
 date = "2020-08-25"
 description = "A review of the creational design patterns used in software development"
 tags = ["design"]
@@ -107,3 +107,5 @@ because you can't easily mock or stub its methods. Don't use it. Rely on depende
 ---
 
 [Part 2 - Structural Design Patterns](/post/structural-design-patterns)
+
+[Part 3 - Behavioural Design Patterns](/post/behavioural-design-patterns/)
