@@ -131,3 +131,19 @@ hr {
 
 .post-list .posts-by-year, .taxonomy-list {
   list-style: none; }
+
+div.pagination ul.pagination {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center; }
+  div.pagination ul.pagination li a {
+    display: inline-block;
+    padding: 0px 6px; }
+  div.pagination ul.pagination li.disabled, div.pagination ul.pagination li.active {
+    pointer-events: none; }
+    div.pagination ul.pagination li.disabled a, div.pagination ul.pagination li.active a {
+      color: #656565; }
