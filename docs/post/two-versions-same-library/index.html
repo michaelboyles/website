@@ -1,0 +1,211 @@
+<!doctype html><html lang=en><head>
+<title>Using Two Versions of a Library in Java | Michael Boyles</title>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name=description content="A tutorial on how to use two versions of the same library in a Java project">
+<meta name=generator content="Hugo 0.89.3">
+<link rel=stylesheet href=https://boyl.es/css/style.css integrity crossorigin=anonymous type=text/css>
+<link rel=stylesheet href=https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css integrity=sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN crossorigin=anonymous type=text/css>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel=stylesheet>
+<script>__FLAMEWARS_CONFIG={awsUrl:'https://rgry1shcqe.execute-api.eu-west-2.amazonaws.com/default',googleClientId:'164705233134-ahoqn1p8em908f190tjgluh2fq6alqo5.apps.googleusercontent.com'}</script>
+<script defer language=javascript type=text/javascript src=https://boyl.es/js/flamewars.js integrity></script>
+</head><body>
+<div class=header><nav>
+<ul class=nav>
+<li><a href=/ title>Home</a></li>
+<li><a href=/about/ title>About</a></li>
+</ul>
+</nav>
+<ul class=social-icons>
+<li>
+<a href=https://github.com/michaelboyles rel=me title=GitHub aria-label=GitHub>
+<i class="fa fa-github" aria-hidden=true></i>
+</a>
+</li>
+<li>
+<a href=https://stackoverflow.com/users/1898563/michael rel=me title=StackOverflow aria-label=StackOverflow>
+<i class="fa fa-stack-overflow" aria-hidden=true></i>
+</a>
+</li>
+<li>
+<a href=https://www.linkedin.com/in/boylesm/ rel=me title=Linkedin aria-label=Linkedin>
+<i class="fa fa-linkedin" aria-hidden=true></i>
+</a>
+</li>
+<li>
+<a href=mailto:michael@boyl.es rel=me title=Email aria-label=Email>
+<i class="fa fa-envelope" aria-hidden=true></i>
+</a>
+</li>
+<li>
+<a href="https://latexonline.cc/compile?git=https%3A%2F%2Fgithub.com%2Fmichaelboyles%2Fwebsite&target=static%2Fdocs%2Fcv.tex&command=xelatex&trackId=1598651052286" rel=me title=CV aria-label=CV>
+<i class="fa fa-file" aria-hidden=true></i>
+</a>
+</li>
+</ul>
+</div>
+<div class=main>
+<div class=post>
+<h1 class=title>Using Two Versions of a Library in Java</h1>
+<div class=meta>
+<span class=date>14 June 2022</span>
+<ul class=tags>
+<li class=tag><a href=/tags/java/ title="View more posts about java">java</a></li>
+<li class=tag><a href=/tags/maven/ title="View more posts about maven">maven</a></li></ul>
+<a href=#comments class=num-comments>Comments</a>
+</div>
+<div class=content><p>Java and its build tools aren&rsquo;t designed to support using two different versions of the same library at runtime.
+Generally, that&rsquo;s a conflict that&rsquo;s automatically resolved to one or the other, and that&rsquo;s exactly what we want. But
+what if it&rsquo;s not? With a few tricks, it&rsquo;s possible to circumvent that behaviour.</p>
+<h2 id=the-problem>The Problem</h2>
+<p>Suppose your project depends on two libraries which each depend on a third library, and that they drastically disagree
+about which version they&rsquo;d prefer.</p>
+<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-plaintext data-lang=plaintext>MyApp
+    \-&gt; LibraryA v1.0
+        \-&gt; LibraryC v5.9
+    \-&gt; LibraryB v1.0
+        \-&gt; LibraryC v0.1
+</code></pre></div><p>You need to choose <em>something</em> to put on the classpath at runtime. If you choose 5.9, there&rsquo;s a strong chance it will
+break LibraryB. If you choose 0.1, there&rsquo;s a strong chance it will break LibraryA. You might even exhaustively
+try every version in-between; there&rsquo;s no guarantee that any version will satisfy both.</p>
+<p>The first thing you should be thinking about if you find yourself in this situation is whether you actually need both
+LibraryA and LibraryB in the first place. If you can replace, rewrite or completely remove one of them then save yourself
+the headache and do that.</p>
+<p>Another solution would be to isolate one of either LibraryA or LibraryB behind a new microservice, though of course
+this adds some overhead compared to doing everything in the same JVM.</p>
+<p>If that&rsquo;s not feasible then welcome, my friend, to dependency hell. You can escape this place, but you&rsquo;ll have to make a
+few deals with the devil. Even if you&rsquo;re lucky enough to never need the techniques described below, hopefully there&rsquo;s
+some interesting things to learn about Java and Maven along the way.</p>
+<p>As a slight simplification, I&rsquo;m going to assume that our example application needs to directly depend upon two versions
+of the same library, Apache Commons Lang 3.10 and 3.9, neither of which have any dependencies themselves. There&rsquo;s no
+reason this approach wouldn&rsquo;t work for more complex trees too.</p>
+<h2 id=the-first-circle-maven>The First Circle: Maven</h2>
+<p>If your project depends on two or more versions of the same library (specifically, the same group ID and
+artifact ID) then all but one of them will be omitted. Maven will select the version which is highest in the dependency
+tree. The theory is that something you depend on more closely is likely to be more important to your application
+functioning correctly than something that you depend on very indirectly. This doesn&rsquo;t always prove true in practice, but
+it&rsquo;s about the best guess it can make with the information it has.</p>
+<p>Being able to omit conflicting dependencies is a key part of what allows Maven to work as well as it does. In a typical
+project with perhaps dozens of direct dependencies and maybe hundreds of transitive ones, conflicting version
+requirements are very common. Being forced to resolve them all manually would be painful and slow.</p>
+<p>We need a way to subvert the standard resolution behaviour. In order to do that, we&rsquo;ll structure our app as a
+multi-module project with three modules:</p>
+<ul>
+<li><strong>app</strong>, depends on sibling modules commonslang-3-9-0 and commonslang-3-10-0</li>
+<li><strong>commonslang-3-9-0</strong>, depends on the real commonslang 3.9</li>
+<li><strong>commonslang-3-10-0</strong>, depends on the real commonslang 3.10</li>
+</ul>
+<p>We want to avoid introducing the 2 transitive dependencies of the real Commons Lang into the app module.
+<a href=https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope>Provided scope</a>
+prevents the transitive relationship, and was the first thing I tried, but it doesn&rsquo;t play well with the next step.
+Runtime scope works best for our purposes.</p>
+<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-xml data-lang=xml><span style=color:#1e90ff;font-weight:700>&lt;dependency&gt;</span>
+   <span style=color:#1e90ff;font-weight:700>&lt;groupId&gt;</span>org.apache.commons<span style=color:#1e90ff;font-weight:700>&lt;/groupId&gt;</span>
+   <span style=color:#1e90ff;font-weight:700>&lt;artifactId&gt;</span>commons-lang3<span style=color:#1e90ff;font-weight:700>&lt;/artifactId&gt;</span>
+   <span style=color:#1e90ff;font-weight:700>&lt;version&gt;</span>3.10<span style=color:#1e90ff;font-weight:700>&lt;/version&gt;</span><span style=color:#aaa;font-style:italic>&lt;!-- and 3.9 in the other module --&gt;</span>
+   <span style=color:#1e90ff;font-weight:700>&lt;scope&gt;</span>runtime<span style=color:#1e90ff;font-weight:700>&lt;/scope&gt;</span>
+<span style=color:#1e90ff;font-weight:700>&lt;/dependency&gt;</span>
+</code></pre></div><p><em>A section of the POM for the module commonslang-3-10-0</em></p>
+<h2 id=the-second-circle-java>The Second Circle: Java</h2>
+<p>Even if we get both JARs onto our classpath, Java doesn&rsquo;t support loading two versions of the same class. The JVM has no
+concept of &ldquo;libraries&rdquo; as units of code, and there&rsquo;s nothing preventing the same package from existing in multiple JARs.
+The JVM deals with classes with fully qualified names (FQNs): <code>java.lang.String</code>, <code>java.util.List</code>, or <code>com.foo.MyClass</code>.</p>
+<p>A basic application with a sequence of JARs on the classpath (<code>-cp a.jar,b.jar</code>) using the default <a href=https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/ClassLoader.html>ClassLoader</a>
+will search through each of those JARs in order until it finds a match for the FQN, then stop. If a class with
+the same FQN exists in both <code>a.jar</code> and <code>b.jar</code> then the class in the latter will never be loaded.</p>
+<p>This causes us an issue because it&rsquo;s extremely likely that at least some classes will exist with the same FQN in both
+versions of our library; any overlapping classes can&rsquo;t both be loaded. The exact extent of the overlap will depend on
+what&rsquo;s changed between versions. In our case, the version increment is small, so the overlap of classes is likely to be
+large.</p>
+<p>The solution is to repackage the libraries so that the classes have unique FQNs. The <a href=https://maven.apache.org/plugins/maven-shade-plugin/shade-mojo.html>Maven Shade Plugin</a>
+is a versatile plugin for repackaging dependencies which can do this for us.</p>
+<p>One of the things the shade plugin allows you to do is to specify a package name and new destination to move them to.
+This is more complex than it might first appear because it involves manipulating the bytecode for all those classes.
+This results in a new &ldquo;shaded&rdquo; JAR.</p>
+<p>For our application, we append a prefix that corresponds to the version of the library, in this case <code>three.ten</code>.</p>
+<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-xml data-lang=xml><span style=color:#1e90ff;font-weight:700>&lt;groupId&gt;</span>org.apache.maven.plugins<span style=color:#1e90ff;font-weight:700>&lt;/groupId&gt;</span>
+<span style=color:#1e90ff;font-weight:700>&lt;artifactId&gt;</span>maven-shade-plugin<span style=color:#1e90ff;font-weight:700>&lt;/artifactId&gt;</span>
+<span style=color:#1e90ff;font-weight:700>&lt;version&gt;</span>3.3.0<span style=color:#1e90ff;font-weight:700>&lt;/version&gt;</span>
+<span style=color:#1e90ff;font-weight:700>&lt;configuration&gt;</span>
+    <span style=color:#1e90ff;font-weight:700>&lt;relocations&gt;</span>
+        <span style=color:#1e90ff;font-weight:700>&lt;relocation&gt;</span>
+            <span style=color:#1e90ff;font-weight:700>&lt;pattern&gt;</span>org.apache<span style=color:#1e90ff;font-weight:700>&lt;/pattern&gt;</span>
+            <span style=color:#1e90ff;font-weight:700>&lt;shadedPattern&gt;</span>three.ten.org.apache<span style=color:#1e90ff;font-weight:700>&lt;/shadedPattern&gt;</span>
+        <span style=color:#1e90ff;font-weight:700>&lt;/relocation&gt;</span>
+    <span style=color:#1e90ff;font-weight:700>&lt;/relocations&gt;</span>
+<span style=color:#1e90ff;font-weight:700>&lt;/configuration&gt;</span>
+</code></pre></div><p><em>A section of the POM for the module commonslang-3-10-0</em></p>
+<p>The shade plugin is the reason we didn&rsquo;t use provided scope earlier, since provided-scope dependencies are not included
+in the shaded JAR, while runtime-scope ones are.</p>
+<p>The result is a JAR with the following structure:</p>
+<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-plaintext data-lang=plaintext>     2399  03-23-2020 09:37   three/ten/org/apache/commons/lang3/AnnotationUtils$1.class
+     6953  03-23-2020 09:37   three/ten/org/apache/commons/lang3/AnnotationUtils.class
+        0  03-23-2020 09:37   three/ten/org/apache/commons/lang3/arch/
+     1546  03-23-2020 09:37   three/ten/org/apache/commons/lang3/arch/Processor$Arch.class
+     1333  03-23-2020 09:37   three/ten/org/apache/commons/lang3/arch/Processor$Type.class
+     1619  03-23-2020 09:37   three/ten/org/apache/commons/lang3/arch/Processor.class
+     ...
+</code></pre></div><p><em>Result of <code>unzip -l</code> on commonslang-3-10-0.jar</em></p>
+<p>We can now import and use classes in the <code>app</code> module such as:</p>
+<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=color:#00a>import</span> <span style=color:#0aa;text-decoration:underline>three.ten.org.apache.commons.lang3.ClassUtils</span>;
+</code></pre></div><h2 id=the-third-circle-ide>The Third Circle: IDE</h2>
+<p>If you&rsquo;re developing in emacs or any other text editor then you&rsquo;re already done. Be sure to latch onto this rare, minor
+victory and use it as the cornerstone of your argument as to why IDEs actually hinder productivity.</p>
+<h3 id=intellij>IntelliJ</h3>
+<p>What we&rsquo;ve done so far is perfectly valid and would build and run just fine, but IntelliJ doesn&rsquo;t detect what&rsquo;s
+happening. That&rsquo;s a problem. It&rsquo;s not natively able to understand what the shade plugin is doing, and so you&rsquo;ll see imports for
+<code>three.ten.org.apache.*</code> fail to resolve. There&rsquo;s <a href=https://youtrack.jetbrains.com/issue/IDEA-93855>an open feature request</a>
+but it&rsquo;s gone largely ignored for the past 10 years.</p>
+<p>One workaround is to use the <a href=https://www.mojohaus.org/build-helper-maven-plugin/usage.html>Build Helper Plugin</a> to
+&ldquo;attach&rdquo; the shaded artifact. Attaching an artifact just involves registering a file, usually a JAR, with Maven.
+It&rsquo;s something that certain plugins will usually just do automatically. The shade plugin can attach the shaded JAR too.
+By default, it attaches the shaded JAR to replace the original output JAR.</p>
+<p>For whatever reason, IntelliJ can grasp what&rsquo;s happened provided that you attach the shaded JAR with the helper plugin. I
+don&rsquo;t think the way in which the 2 plugins attach the JAR is any different. I&rsquo;d guess that IntelliJ just has a specific
+handler for the helper plugin, and doesn&rsquo;t have one for the shade plugin.</p>
+<p>You shouldn&rsquo;t have to change your build to cater to the deficiencies of an IDE, but I think it would be dogmatic to insist on
+that. There&rsquo;s probably an alternative way to set things up in Project Structure, while leaving the build untouched, but
+there&rsquo;s huge value in being able to check out a project and immediately run <code>mvn verify</code> without faffing around, and
+checking IDE configuration into version control always ends up being annoying.</p>
+<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-xml data-lang=xml><span style=color:#1e90ff;font-weight:700>&lt;groupId&gt;</span>org.codehaus.mojo<span style=color:#1e90ff;font-weight:700>&lt;/groupId&gt;</span>
+<span style=color:#1e90ff;font-weight:700>&lt;artifactId&gt;</span>build-helper-maven-plugin<span style=color:#1e90ff;font-weight:700>&lt;/artifactId&gt;</span>
+<span style=color:#1e90ff;font-weight:700>&lt;version&gt;</span>3.3.0<span style=color:#1e90ff;font-weight:700>&lt;/version&gt;</span>
+<span style=color:#1e90ff;font-weight:700>&lt;executions&gt;</span>
+    <span style=color:#1e90ff;font-weight:700>&lt;execution&gt;</span>
+        <span style=color:#1e90ff;font-weight:700>&lt;phase&gt;</span>package<span style=color:#1e90ff;font-weight:700>&lt;/phase&gt;</span>
+        <span style=color:#1e90ff;font-weight:700>&lt;goals&gt;</span>
+            <span style=color:#1e90ff;font-weight:700>&lt;goal&gt;</span>attach-artifact<span style=color:#1e90ff;font-weight:700>&lt;/goal&gt;</span>
+        <span style=color:#1e90ff;font-weight:700>&lt;/goals&gt;</span>
+        <span style=color:#1e90ff;font-weight:700>&lt;configuration&gt;</span>
+            <span style=color:#1e90ff;font-weight:700>&lt;artifacts&gt;</span>
+                <span style=color:#1e90ff;font-weight:700>&lt;artifact&gt;</span>
+                    <span style=color:#1e90ff;font-weight:700>&lt;file&gt;</span>${project.build.directory}/${project.build.finalName}.jar<span style=color:#1e90ff;font-weight:700>&lt;/file&gt;</span>
+                    <span style=color:#1e90ff;font-weight:700>&lt;type&gt;</span>jar<span style=color:#1e90ff;font-weight:700>&lt;/type&gt;</span>
+                    <span style=color:#1e90ff;font-weight:700>&lt;classifier&gt;</span>shaded<span style=color:#1e90ff;font-weight:700>&lt;/classifier&gt;</span>
+</code></pre></div><p><em>A section of the POM for the module commonslang-3-10-0</em></p>
+<p>We use the <a href="https://maven.apache.org/pom.html#dependencies:~:text=classifier">classifier</a> &lsquo;shaded&rsquo; to attach the JAR in
+addition to the unclassified JAR that&rsquo;s already attached, so we need to update the dependencies in our <code>app</code> module to
+use those classifiers.</p>
+<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-xml data-lang=xml><span style=color:#1e90ff;font-weight:700>&lt;dependency&gt;</span>
+    <span style=color:#1e90ff;font-weight:700>&lt;groupId&gt;</span>org.example<span style=color:#1e90ff;font-weight:700>&lt;/groupId&gt;</span>
+    <span style=color:#1e90ff;font-weight:700>&lt;artifactId&gt;</span>commonslang-3-12-0<span style=color:#1e90ff;font-weight:700>&lt;/artifactId&gt;</span>
+    <span style=color:#1e90ff;font-weight:700>&lt;version&gt;</span>${project.version}<span style=color:#1e90ff;font-weight:700>&lt;/version&gt;</span>
+    <span style=color:#1e90ff;font-weight:700>&lt;classifier&gt;</span>shaded<span style=color:#1e90ff;font-weight:700>&lt;/classifier&gt;</span>
+<span style=color:#1e90ff;font-weight:700>&lt;/dependency&gt;</span>
+<span style=color:#1e90ff;font-weight:700>&lt;dependency&gt;</span>
+    <span style=color:#1e90ff;font-weight:700>&lt;groupId&gt;</span>org.example<span style=color:#1e90ff;font-weight:700>&lt;/groupId&gt;</span>
+    <span style=color:#1e90ff;font-weight:700>&lt;artifactId&gt;</span>commonslang-3-10-0<span style=color:#1e90ff;font-weight:700>&lt;/artifactId&gt;</span>
+    <span style=color:#1e90ff;font-weight:700>&lt;version&gt;</span>${project.version}<span style=color:#1e90ff;font-weight:700>&lt;/version&gt;</span>
+    <span style=color:#1e90ff;font-weight:700>&lt;classifier&gt;</span>shaded<span style=color:#1e90ff;font-weight:700>&lt;/classifier&gt;</span>
+<span style=color:#1e90ff;font-weight:700>&lt;/dependency&gt;</span>
+</code></pre></div><p><em>A section of the POM for the module app</em></p>
+<h3 id=eclipse>Eclipse</h3>
+<p>Eclipse might work out of the box. I mean, there&rsquo;s a first time for everything. Seriously though, I didn&rsquo;t try it.</p>
+<h2 id=talk-is-cheap-show-me-the-code>Talk is cheap. Show me the code!</h2>
+<p>A <a href=https://github.com/michaelboyles/version-shading>full sample project</a> is available on GitHub.</p></div>
+<hr>
+<div id=comments></div>
+</div>
+</div>
+</body>
+</html>

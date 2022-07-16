@@ -3,7 +3,7 @@ author = "Michael Boyles"
 title = "Stop using Maven deploy"
 date = "2020-08-24"
 description = "Maven's lifecycle is fundamentally broken. In this post I explain why you should avoid deploying via Maven's deploy plugin." 
-tags = ["build automation", "ci"]
+tags = ["maven", "build automation", "ci"]
 +++
 
 [`mvn deploy`](https://maven.apache.org/plugins/maven-deploy-plugin/) is the final phase of
