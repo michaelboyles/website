@@ -1,6 +1,6 @@
 +++
 author = "Michael Boyles"
-title = "Using Two Versions of a Library in Java"
+title = "Using two versions of a library in Java"
 date = "2022-06-14"
 description = "A tutorial on how to use two versions of the same library in a Java project"
 tags = ["java", "maven"]
