@@ -1,91 +1,26 @@
-<!doctype html><html lang=en><head>
-<title>Stop using Maven deploy | Michael Boyles</title>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,minimum-scale=1,initial-scale=1">
-<meta name=description content="Maven's lifecycle is fundamentally broken. In this post I explain why you should avoid deploying via Maven's deploy plugin.">
-<meta name=generator content="Hugo 0.89.3">
-<link rel=stylesheet href=https://boyl.es/css/style.css integrity crossorigin=anonymous type=text/css>
-<link rel=stylesheet href=https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css integrity=sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN crossorigin=anonymous type=text/css>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel=stylesheet>
-<script>__FLAMEWARS_CONFIG={awsUrl:'https://rgry1shcqe.execute-api.eu-west-2.amazonaws.com/default',googleClientId:'164705233134-ahoqn1p8em908f190tjgluh2fq6alqo5.apps.googleusercontent.com'}</script>
-<script defer language=javascript type=text/javascript src=https://boyl.es/js/flamewars.js integrity></script>
-</head><body>
-<div class=header><nav>
-<ul class=nav>
-<li><a href=/ title>Home</a></li>
-<li><a href=/about/ title>About</a></li>
-</ul>
-</nav>
-<ul class=social-icons>
-<li>
-<a href=https://github.com/michaelboyles rel=me title=GitHub aria-label=GitHub>
-<i class="fa fa-github" aria-hidden=true></i>
-</a>
-</li>
-<li>
-<a href=https://stackoverflow.com/users/1898563/michael rel=me title=StackOverflow aria-label=StackOverflow>
-<i class="fa fa-stack-overflow" aria-hidden=true></i>
-</a>
-</li>
-<li>
-<a href=https://www.linkedin.com/in/boylesm/ rel=me title=Linkedin aria-label=Linkedin>
-<i class="fa fa-linkedin" aria-hidden=true></i>
-</a>
-</li>
-<li>
-<a href=mailto:michael@boyl.es rel=me title=Email aria-label=Email>
-<i class="fa fa-envelope" aria-hidden=true></i>
-</a>
-</li>
-<li>
-<a href="https://latexonline.cc/compile?git=https%3A%2F%2Fgithub.com%2Fmichaelboyles%2Fwebsite&target=static%2Fdocs%2Fcv.tex&command=xelatex&trackId=1598651052286" rel=me title=CV aria-label=CV>
-<i class="fa fa-file" aria-hidden=true></i>
-</a>
-</li>
-</ul>
-</div>
-<div class=main>
-<div class=post>
-<h1 class=title>Stop using Maven deploy</h1>
-<div class=meta>
-<span class=date>24 August 2020</span>
-<ul class=tags>
-<li class=tag><a href=/tags/maven/ title="View more posts about maven">maven</a></li>
-<li class=tag><a href=/tags/build-automation/ title="View more posts about build automation">build automation</a></li>
-<li class=tag><a href=/tags/ci/ title="View more posts about ci">ci</a></li></ul>
-<a href=#comments class=num-comments>Comments</a>
-</div>
-<div class=content><p><a href=https://maven.apache.org/plugins/maven-deploy-plugin/><code>mvn deploy</code></a> is the final phase of
+<!doctype html><html lang=en><head><title>Stop using Maven deploy | Michael Boyles</title><meta charset=utf-8><meta name=viewport content="width=device-width,minimum-scale=1,initial-scale=1"><meta name=description content="Maven's lifecycle is fundamentally broken. In this post I explain why you should avoid deploying via Maven's deploy plugin."><meta name=generator content="Hugo 0.74.3"><link rel=stylesheet href=https://boyl.es/css/style.css integrity crossorigin=anonymous type=text/css><link rel=stylesheet href=https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css integrity=sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN crossorigin=anonymous type=text/css><link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel=stylesheet><script>__FLAMEWARS_CONFIG={awsUrl:'https:\/\/rgry1shcqe.execute-api.eu-west-2.amazonaws.com\/default',googleClientId:'164705233134-ahoqn1p8em908f190tjgluh2fq6alqo5.apps.googleusercontent.com'};</script><script defer language=javascript type=text/javascript src=https://boyl.es/js/flamewars.js integrity></script></head><body><div class=header><nav><ul class=nav><li><a href=/>Home</a></li><li><a href=/about/>About</a></li></ul></nav><ul class=social-icons><li><a href=https://github.com/michaelboyles rel=me title=GitHub aria-label=GitHub><i class="fa fa-github" aria-hidden=true></i></a></li><li><a href=https://stackoverflow.com/users/1898563/michael rel=me title=StackOverflow aria-label=StackOverflow><i class="fa fa-stack-overflow" aria-hidden=true></i></a></li><li><a href=https://www.linkedin.com/in/boylesm/ rel=me title=Linkedin aria-label=Linkedin><i class="fa fa-linkedin" aria-hidden=true></i></a></li><li><a href=mailto:michael@boyl.es rel=me title=Email aria-label=Email><i class="fa fa-envelope" aria-hidden=true></i></a></li><li><a href="https://latexonline.cc/compile?git=https%3A%2F%2Fgithub.com%2Fmichaelboyles%2Fwebsite&target=static%2Fdocs%2Fcv.tex&command=xelatex&trackId=1598651052286" rel=me title=CV aria-label=CV><i class="fa fa-file" aria-hidden=true></i></a></li></ul></div><div class=main><div class=post><h1 class=title>Stop using Maven deploy</h1><div class=meta><span class=date>24 August 2020</span><ul class=tags><li class=tag><a href=/tags/maven/ title="View more posts about maven">maven</a></li><li class=tag><a href=/tags/build-automation/ title="View more posts about build automation">build automation</a></li><li class=tag><a href=/tags/ci/ title="View more posts about ci">ci</a></li></ul><a href=#comments class=num-comments>Comments</a></div><div class=content><p><a href=https://maven.apache.org/plugins/maven-deploy-plugin/><code>mvn deploy</code></a> is the final phase of
 <a href=https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html>Maven&rsquo;s build lifecycle</a>. It&rsquo;s
 responsible for uploading the artifacts produced by the previous phases of the build to an artifact repository like
 <a href=https://www.sonatype.com/product-nexus-repository>Nexus</a> where they can be stored and accessed by other dependent
-projects, or used as part of an automated deployment.</p>
-<p>Maven is a build tool. Its responsibility should be to build the application. Tacking on an artifact upload step at the
-end seems convenient and harmless enough, but in practice I&rsquo;ve found that I prefer to avoid using it.</p>
-<p>The major problem as I see it is that there is that it&rsquo;s difficult to differentiate between a developer&rsquo;s machine and
+projects, or used as part of an automated deployment.</p><p>Maven is a build tool. Its responsibility should be to build the application. Tacking on an artifact upload step at the
+end seems convenient and harmless enough, but in practice I&rsquo;ve found that I prefer to avoid using it.</p><p>The major problem as I see it is that there is that it&rsquo;s difficult to differentiate between a developer&rsquo;s machine and
 the <a href=https://en.wikipedia.org/wiki/List_of_build_automation_software#Continuous_integration>build server</a>. There should
 be no reason to upload artifacts from a development machine, and you should try your best to make doing so absolutely
 impossible. If you don&rsquo;t then it becomes possible to circumvent any quality checks that are normally enforced by the
 build server. It even allows you to push a build containing code that was never committed to source control. If you end
-up in that situation, good luck decompiling your JARs to try to work out what changes were included.</p>
-<p>One solution is to enforce authentication on your artifact repository, which of course you should be doing anyway. If
+up in that situation, good luck decompiling your JARs to try to work out what changes were included.</p><p>One solution is to enforce authentication on your artifact repository, which of course you should be doing anyway. If
 you have a username and password which only the build server knows, it would be impossible to upload artifacts from
-anywhere else.</p>
-<p>The problem I&rsquo;ve found with this is that Maven does not make it easy to keep the password secret. I&rsquo;ve often seen my
-colleagues sharing passwords for artifact repos in plaintext or, worse, checking them into source control.</p>
-<p>Maven does provide <a href=https://maven.apache.org/guides/mini/guide-encryption.html>a way to encrypt passwords</a> but it
+anywhere else.</p><p>The problem I&rsquo;ve found with this is that Maven does not make it easy to keep the password secret. I&rsquo;ve often seen my
+colleagues sharing passwords for artifact repos in plaintext or, worse, checking them into source control.</p><p>Maven does provide <a href=https://maven.apache.org/guides/mini/guide-encryption.html>a way to encrypt passwords</a> but it
 relies on keeping configuration files on the local filesystem, and keeping those files secret; you could try changing
 the unix file permissions for those files but I find that unreliable. It can be a hassle to update the passwords if the
 files exist on multiple runners. They could also be easily missed if you spin up a new build server and have nothing to
-document that they&rsquo;re required.</p>
-<p>The solution which has worked for me is to move the artifact upload step to a separate stage of the build pipeline,
+document that they&rsquo;re required.</p><p>The solution which has worked for me is to move the artifact upload step to a separate stage of the build pipeline,
 after Maven has completed. I don&rsquo;t use any <code>&lt;distributionManagement></code>. I use Jenkins and the
 <a href=https://plugins.jenkins.io/nexus-artifact-uploader/>Nexus Artifact Uploader plugin</a>. The only real downside is having
 to manually enumerate the artifacts. In projects with a few modules it can get a bit tedious, but I&rsquo;ve sometimes
-appreciated the fine-grained control of being able to exclude a module or two by simply omitting them from the list.</p>
-<p>The section of my <a href=https://www.jenkins.io/pipeline/getting-started-pipelines/>build pipeline</a> responsible for
-deployment will often look something like this:</p>
-<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-groovy data-lang=groovy>nexusArtifactUploader {
+appreciated the fine-grained control of being able to exclude a module or two by simply omitting them from the list.</p><p>The section of my <a href=https://www.jenkins.io/pipeline/getting-started-pipelines/>build pipeline</a> responsible for
+deployment will often look something like this:</p><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-groovy data-lang=groovy>nexusArtifactUploader {
     nexusVersion(<span style=color:#a50>&#39;nexus3&#39;</span>)
     protocol(<span style=color:#a50>&#39;https&#39;</span>)
     nexusUrl(<span style=color:#a50>&#39;our-nexus-host&#39;</span>)
@@ -108,15 +43,7 @@ deployment will often look something like this:</p>
 credentials are obtained is left up to the build server. I could store the password directly in Jenkins, or in a
 separate secrets manager like <a href=https://www.vaultproject.io/>HashiCorp Vault</a> (which is what we do). Either way, the
 credentials cannot be easily retrieved by a user, are easy to update, and their usage is fully documented in the
-pipeline definition.</p>
-<p>There are other advantages too. Splitting the artifact upload from the build means you&rsquo;ll get a more granular view of
+pipeline definition.</p><p>There are other advantages too. Splitting the artifact upload from the build means you&rsquo;ll get a more granular view of
 where a pipeline has failed. If Maven and the upload are separate steps in the pipeline, then I can see quickly which
 step has failed and I know immediately where to start looking. If Maven were responsible for both, both failures would
-be conflated into a single step, and only the build output would reveal what went wrong.</p>
-</div>
-<hr>
-<div id=comments></div>
-</div>
-</div>
-</body>
-</html>
+be conflated into a single step, and only the build output would reveal what went wrong.</p></div><hr><div id=comments></div></div></div></body></html>

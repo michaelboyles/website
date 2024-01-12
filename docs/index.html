@@ -1,239 +1,38 @@
-<!doctype html><html lang=en><head>
-<title>Michael Boyles</title>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,minimum-scale=1,initial-scale=1">
-<meta name=generator content="Hugo 0.89.3">
-<link rel=stylesheet href=https://boyl.es/css/style.css integrity crossorigin=anonymous type=text/css>
-<link rel=stylesheet href=https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css integrity=sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN crossorigin=anonymous type=text/css>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel=stylesheet>
-<script>__FLAMEWARS_CONFIG={awsUrl:'https://rgry1shcqe.execute-api.eu-west-2.amazonaws.com/default',googleClientId:'164705233134-ahoqn1p8em908f190tjgluh2fq6alqo5.apps.googleusercontent.com'}</script>
-<script defer language=javascript type=text/javascript src=https://boyl.es/js/flamewars.js integrity></script>
-</head><body>
-<div class=header><nav>
-<ul class=nav>
-<li><a class=current href=/ title>Home</a></li>
-<li><a href=/about/ title>About</a></li>
-</ul>
-</nav>
-<ul class=social-icons>
-<li>
-<a href=https://github.com/michaelboyles rel=me title=GitHub aria-label=GitHub>
-<i class="fa fa-github" aria-hidden=true></i>
-</a>
-</li>
-<li>
-<a href=https://stackoverflow.com/users/1898563/michael rel=me title=StackOverflow aria-label=StackOverflow>
-<i class="fa fa-stack-overflow" aria-hidden=true></i>
-</a>
-</li>
-<li>
-<a href=https://www.linkedin.com/in/boylesm/ rel=me title=Linkedin aria-label=Linkedin>
-<i class="fa fa-linkedin" aria-hidden=true></i>
-</a>
-</li>
-<li>
-<a href=mailto:michael@boyl.es rel=me title=Email aria-label=Email>
-<i class="fa fa-envelope" aria-hidden=true></i>
-</a>
-</li>
-<li>
-<a href="https://latexonline.cc/compile?git=https%3A%2F%2Fgithub.com%2Fmichaelboyles%2Fwebsite&target=static%2Fdocs%2Fcv.tex&command=xelatex&trackId=1598651052286" rel=me title=CV aria-label=CV>
-<i class="fa fa-file" aria-hidden=true></i>
-</a>
-</li>
-</ul>
-</div>
-<div class=main>
-<article class=post>
-<h2 class=title><a href=/post/simple-di/>A simple, compile-time dependency injection framework</a></h2>
-<div class=meta>
-<span class=date>
-4 February
-</span>
-<ul class=tags>
-<li class=tag><a href=/tags/project/ title="View more posts about project">project</a></li>
-<li class=tag><a href=/tags/java/ title="View more posts about java">java</a></li></ul>
-<a href=/post/simple-di/#comments class=num-comments>Comments</a>
-</div>
-<p class=summary><p>The most popular <a href=https://en.wikipedia.org/wiki/Dependency_injection>dependency injection</a> frameworks in Java —
+<!doctype html><html lang=en><head><title>Michael Boyles</title><meta charset=utf-8><meta name=viewport content="width=device-width,minimum-scale=1,initial-scale=1"><meta name=generator content="Hugo 0.74.3"><link rel=stylesheet href=https://boyl.es/css/style.css integrity crossorigin=anonymous type=text/css><link rel=stylesheet href=https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css integrity=sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN crossorigin=anonymous type=text/css><link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel=stylesheet><script>__FLAMEWARS_CONFIG={awsUrl:'https:\/\/rgry1shcqe.execute-api.eu-west-2.amazonaws.com\/default',googleClientId:'164705233134-ahoqn1p8em908f190tjgluh2fq6alqo5.apps.googleusercontent.com'};</script><script defer language=javascript type=text/javascript src=https://boyl.es/js/flamewars.js integrity></script></head><body><div class=header><nav><ul class=nav><li><a class=current href=/>Home</a></li><li><a href=/about/>About</a></li></ul></nav><ul class=social-icons><li><a href=https://github.com/michaelboyles rel=me title=GitHub aria-label=GitHub><i class="fa fa-github" aria-hidden=true></i></a></li><li><a href=https://stackoverflow.com/users/1898563/michael rel=me title=StackOverflow aria-label=StackOverflow><i class="fa fa-stack-overflow" aria-hidden=true></i></a></li><li><a href=https://www.linkedin.com/in/boylesm/ rel=me title=Linkedin aria-label=Linkedin><i class="fa fa-linkedin" aria-hidden=true></i></a></li><li><a href=mailto:michael@boyl.es rel=me title=Email aria-label=Email><i class="fa fa-envelope" aria-hidden=true></i></a></li><li><a href="https://latexonline.cc/compile?git=https%3A%2F%2Fgithub.com%2Fmichaelboyles%2Fwebsite&target=static%2Fdocs%2Fcv.tex&command=xelatex&trackId=1598651052286" rel=me title=CV aria-label=CV><i class="fa fa-file" aria-hidden=true></i></a></li></ul></div><div class=main><article class=post><h2 class=title><a href=/post/css-reset-for-tables/>A CSS Grid Reset for Tables</a></h2><div class=meta><span class=date>12 January</span><ul class=tags><li class=tag><a href=/tags/webdev/ title="View more posts about webdev">webdev</a></li></ul><a href=/post/css-reset-for-tables/#comments class=num-comments>Comments</a></div><p class=summary><p>Trying to style an HTML table is one of the few things that gives me flashbacks to how annoying web development used to
+be back in the day. There are 8 different <code>display: table*</code> types which all have subtly inconsistent behaviour from
+everything else. Want to add a border radius to a table row? Fuck you,
+<a href=https://developer.mozilla.org/en-US/docs/Web/CSS/border-radius#formal_definition>&ldquo;the behavior on internal table elements is undefined&rdquo;</a>.</p></p><a href=/post/css-reset-for-tables/ class=continue-reading>Continue reading</a></article><article class=post><h2 class=title><a href=/post/simple-di/>A simple, compile-time dependency injection framework</a></h2><div class=meta><span class=date>4 February 2023</span><ul class=tags><li class=tag><a href=/tags/project/ title="View more posts about project">project</a></li><li class=tag><a href=/tags/java/ title="View more posts about java">java</a></li></ul><a href=/post/simple-di/#comments class=num-comments>Comments</a></div><p class=summary><p>The most popular <a href=https://en.wikipedia.org/wiki/Dependency_injection>dependency injection</a> frameworks in Java —
 Spring and Guice — are built using reflection. There are some problems with this approach, and I believe that a
 compile-time solution is better in most cases. There are already compile-time implementations (e.g.
 <a href=https://github.com/google/dagger>Dagger</a>), but I wanted to write
 <a href=https://github.com/michaelboyles/simple-di>my own bare-bones implementation</a>. It&rsquo;s not designed to be used in real
-projects, but as an illustrative example of how such an implementation can work.</p></p>
-<a href=/post/simple-di/ class=continue-reading>Continue reading</a>
-</article>
-<article class=post>
-<h2 class=title><a href=/post/two-versions-same-library/>Using two versions of a library in Java</a></h2>
-<div class=meta>
-<span class=date>
-14 June 2022
-</span>
-<ul class=tags>
-<li class=tag><a href=/tags/java/ title="View more posts about java">java</a></li>
-<li class=tag><a href=/tags/maven/ title="View more posts about maven">maven</a></li></ul>
-<a href=/post/two-versions-same-library/#comments class=num-comments>Comments</a>
-</div>
-<p class=summary><p>Java and its build tools aren&rsquo;t designed to support using two different versions of the same library at runtime.
+projects, but as an illustrative example of how such an implementation can work.</p></p><a href=/post/simple-di/ class=continue-reading>Continue reading</a></article><article class=post><h2 class=title><a href=/post/two-versions-same-library/>Using two versions of a library in Java</a></h2><div class=meta><span class=date>14 June 2022</span><ul class=tags><li class=tag><a href=/tags/java/ title="View more posts about java">java</a></li><li class=tag><a href=/tags/maven/ title="View more posts about maven">maven</a></li></ul><a href=/post/two-versions-same-library/#comments class=num-comments>Comments</a></div><p class=summary><p>Java and its build tools aren&rsquo;t designed to support using two different versions of the same library at runtime.
 Generally, that&rsquo;s a conflict that&rsquo;s automatically resolved to one or the other, and that&rsquo;s exactly what we want. But
-what if it&rsquo;s not? With a few tricks, it&rsquo;s possible to circumvent that behaviour.</p></p>
-<a href=/post/two-versions-same-library/ class=continue-reading>Continue reading</a>
-</article>
-<article class=post>
-<h2 class=title><a href=/post/imposter-syndrome/>Imposter syndrome? You might just be bad at programming</a></h2>
-<div class=meta>
-<span class=date>
-12 December 2021
-</span>
-<ul class=tags>
-<li class=tag><a href=/tags/tech-industry/ title="View more posts about tech industry">tech industry</a></li></ul>
-<a href=/post/imposter-syndrome/#comments class=num-comments>Comments</a>
-</div>
-<p class=summary><p><a href=https://en.wikipedia.org/wiki/Impostor_syndrome>Imposter syndrome</a> is the tendency for people to significantly underrate
+what if it&rsquo;s not? With a few tricks, it&rsquo;s possible to circumvent that behaviour.</p></p><a href=/post/two-versions-same-library/ class=continue-reading>Continue reading</a></article><article class=post><h2 class=title><a href=/post/imposter-syndrome/>Imposter syndrome? You might just be bad at programming</a></h2><div class=meta><span class=date>12 December 2021</span><ul class=tags><li class=tag><a href=/tags/tech-industry/ title="View more posts about tech industry">tech industry</a></li></ul><a href=/post/imposter-syndrome/#comments class=num-comments>Comments</a></div><p class=summary><p><a href=https://en.wikipedia.org/wiki/Impostor_syndrome>Imposter syndrome</a> is the tendency for people to significantly underrate
 their own ability and to feel like an imposter within their field. It can make people feel anxious that they&rsquo;re
 eventually going to be exposed. Over the past few years, this term&rsquo;s <a href="https://trends.google.com/trends/explore?date=all&q=imposter%20syndrome,impostor%20syndrome">seen a surge in popularity</a>
 within software development. If you express that you&rsquo;re struggling at your programming job, there&rsquo;s a good
 chance that you&rsquo;ll be met with comforting replies like &ldquo;<em>you just have imposter syndrome.</em>&rdquo; There&rsquo;s an alternative
-explanation: you might actually be bad.</p></p>
-<a href=/post/imposter-syndrome/ class=continue-reading>Continue reading</a>
-</article>
-<article class=post>
-<h2 class=title><a href=/post/behavioural-design-patterns/>Design patterns reviewed #3: behavioural</a></h2>
-<div class=meta>
-<span class=date>
-25 October 2021
-</span>
-<ul class=tags>
-<li class=tag><a href=/tags/design/ title="View more posts about design">design</a></li></ul>
-<a href=/post/behavioural-design-patterns/#comments class=num-comments>Comments</a>
-</div>
-<p class=summary><p>This is the third and final post in a series in which I’m reviewing
+explanation: you might actually be bad.</p></p><a href=/post/imposter-syndrome/ class=continue-reading>Continue reading</a></article><article class=post><h2 class=title><a href=/post/behavioural-design-patterns/>Design patterns reviewed #3: behavioural</a></h2><div class=meta><span class=date>25 October 2021</span><ul class=tags><li class=tag><a href=/tags/design/ title="View more posts about design">design</a></li></ul><a href=/post/behavioural-design-patterns/#comments class=num-comments>Comments</a></div><p class=summary><p>This is the third and final post in a series in which I’m reviewing
 <a href=https://en.wikipedia.org/wiki/Software_design_pattern>software design patterns</a>. This time out I&rsquo;m taking a look at
 <a href=https://en.wikipedia.org/wiki/Behavioral_pattern>behavioural patterns</a>. These all &ldquo;<em>characterize the ways in which
-classes or objects interact</em>&rdquo;. If that sounds indistinct from structural patterns, it&rsquo;s because it is. Just go with it.</p></p>
-<a href=/post/behavioural-design-patterns/ class=continue-reading>Continue reading</a>
-</article>
-<article class=post>
-<h2 class=title><a href=/post/reflection-is-a-crutch-of-java-ecosystem/>Reflection is a crutch of the Java ecosystem</a></h2>
-<div class=meta>
-<span class=date>
-4 October 2021
-</span>
-<ul class=tags>
-<li class=tag><a href=/tags/design/ title="View more posts about design">design</a></li></ul>
-<a href=/post/reflection-is-a-crutch-of-java-ecosystem/#comments class=num-comments>Comments</a>
-</div>
-<p class=summary><p>Java gained traction because you could write code which could run anywhere, but it continues to be successful in a large
+classes or objects interact</em>&rdquo;. If that sounds indistinct from structural patterns, it&rsquo;s because it is. Just go with it.</p></p><a href=/post/behavioural-design-patterns/ class=continue-reading>Continue reading</a></article><article class=post><h2 class=title><a href=/post/reflection-is-a-crutch-of-java-ecosystem/>Reflection is a crutch of the Java ecosystem</a></h2><div class=meta><span class=date>4 October 2021</span><ul class=tags><li class=tag><a href=/tags/design/ title="View more posts about design">design</a></li></ul><a href=/post/reflection-is-a-crutch-of-java-ecosystem/#comments class=num-comments>Comments</a></div><p class=summary><p>Java gained traction because you could write code which could run anywhere, but it continues to be successful in a large
 part due to its fantastic ecosystem. Libraries like Spring, Hibernate and Gson are comparable to, if not better than,
 practically any equivalent tools available for other languages. However, they&rsquo;ve helped popularise the idea that using
 <a href=https://www.oracle.com/technical-resources/articles/java/javareflection.html>reflection</a> is likely to be an intrinsic
 part of writing a Java library or framework. As Java developers, we&rsquo;re being short-changed with solutions that force us
-to sacrifice strong typing and are impossible to debug.</p></p>
-<a href=/post/reflection-is-a-crutch-of-java-ecosystem/ class=continue-reading>Continue reading</a>
-</article>
-<article class=post>
-<h2 class=title><a href=/post/add-control-flow-to-jsx/>Adding control flow to JSX with TypeScript</a></h2>
-<div class=meta>
-<span class=date>
-13 June 2021
-</span>
-<ul class=tags>
-<li class=tag><a href=/tags/project/ title="View more posts about project">project</a></li></ul>
-<a href=/post/add-control-flow-to-jsx/#comments class=num-comments>Comments</a>
-</div>
-<p class=summary><p>In any non-trivial React project, one of the things you&rsquo;ll eventually need to do is render something conditionally.
+to sacrifice strong typing and are impossible to debug.</p></p><a href=/post/reflection-is-a-crutch-of-java-ecosystem/ class=continue-reading>Continue reading</a></article><article class=post><h2 class=title><a href=/post/add-control-flow-to-jsx/>Adding control flow to JSX with TypeScript</a></h2><div class=meta><span class=date>13 June 2021</span><ul class=tags><li class=tag><a href=/tags/project/ title="View more posts about project">project</a></li></ul><a href=/post/add-control-flow-to-jsx/#comments class=num-comments>Comments</a></div><p class=summary><p>In any non-trivial React project, one of the things you&rsquo;ll eventually need to do is render something conditionally.
 You <a href=https://react-cn.github.io/react/tips/if-else-in-JSX.html>can&rsquo;t use if-else statements within JSX</a>. You can use
 the conditional (“ternary”) operator but I often find that it produces code that&rsquo;s hard to read. I&rsquo;ve developed a
 transform which adds special meaning to certain JSX tags, allowing you to write <code>&lt;If></code> and <code>&lt;Else></code> blocks which behave
-intuitively.</p></p>
-<a href=/post/add-control-flow-to-jsx/ class=continue-reading>Continue reading</a>
-</article>
-<article class=post>
-<h2 class=title><a href=/post/dont-sponsor-me/>Don't sponsor me</a></h2>
-<div class=meta>
-<span class=date>
-31 October 2020
-</span>
-<ul class=tags>
-<li class=tag><a href=/tags/open-source/ title="View more posts about open source">open source</a></li></ul>
-<a href=/post/dont-sponsor-me/#comments class=num-comments>Comments</a>
-</div>
-<p class=summary><p>There seems to be a growing trend of software developers panhandling for donations. Whether it&rsquo;s via GitHub Sponsors,
+intuitively.</p></p><a href=/post/add-control-flow-to-jsx/ class=continue-reading>Continue reading</a></article><article class=post><h2 class=title><a href=/post/dont-sponsor-me/>Don't sponsor me</a></h2><div class=meta><span class=date>31 October 2020</span><ul class=tags><li class=tag><a href=/tags/open-source/ title="View more posts about open source">open source</a></li></ul><a href=/post/dont-sponsor-me/#comments class=num-comments>Comments</a></div><p class=summary><p>There seems to be a growing trend of software developers panhandling for donations. Whether it&rsquo;s via GitHub Sponsors,
 Patreon or <a href=https://ko-fi.com/>Ko-fi</a>, a culture of entitlement is on the rise. Some even expect to be rewarded for
-their Stack Overflow answers. Good luck with that.</p></p>
-<a href=/post/dont-sponsor-me/ class=continue-reading>Continue reading</a>
-</article>
-<article class=post>
-<h2 class=title><a href=/post/structural-design-patterns/>Design patterns reviewed #2: structural</a></h2>
-<div class=meta>
-<span class=date>
-25 October 2020
-</span>
-<ul class=tags>
-<li class=tag><a href=/tags/design/ title="View more posts about design">design</a></li></ul>
-<a href=/post/structural-design-patterns/#comments class=num-comments>Comments</a>
-</div>
-<p class=summary><p>This is the second post in a series in which I’m reviewing
+their Stack Overflow answers. Good luck with that.</p></p><a href=/post/dont-sponsor-me/ class=continue-reading>Continue reading</a></article><article class=post><h2 class=title><a href=/post/structural-design-patterns/>Design patterns reviewed #2: structural</a></h2><div class=meta><span class=date>25 October 2020</span><ul class=tags><li class=tag><a href=/tags/design/ title="View more posts about design">design</a></li></ul><a href=/post/structural-design-patterns/#comments class=num-comments>Comments</a></div><p class=summary><p>This is the second post in a series in which I’m reviewing
 <a href=https://en.wikipedia.org/wiki/Software_design_pattern>software design patterns</a>. This time out I&rsquo;m taking a look at
 <a href=https://en.wikipedia.org/wiki/Structural_pattern>structural patterns</a>. These are all strategies for defining and
-managing relationships between classes and interfaces.</p></p>
-<a href=/post/structural-design-patterns/ class=continue-reading>Continue reading</a>
-</article>
-<article class=post>
-<h2 class=title><a href=/post/hybrid-ci/>Hybrid CI</a></h2>
-<div class=meta>
-<span class=date>
-18 October 2020
-</span>
-<ul class=tags>
-<li class=tag><a href=/tags/build-automation/ title="View more posts about build automation">build automation</a></li>
-<li class=tag><a href=/tags/ci/ title="View more posts about ci">ci</a></li></ul>
-<a href=/post/hybrid-ci/#comments class=num-comments>Comments</a>
-</div>
-<p class=summary><p>The company I work for uses GitLab to host our Git repositories. Along with
+managing relationships between classes and interfaces.</p></p><a href=/post/structural-design-patterns/ class=continue-reading>Continue reading</a></article><article class=post><h2 class=title><a href=/post/hybrid-ci/>Hybrid CI</a></h2><div class=meta><span class=date>18 October 2020</span><ul class=tags><li class=tag><a href=/tags/build-automation/ title="View more posts about build automation">build automation</a></li><li class=tag><a href=/tags/ci/ title="View more posts about ci">ci</a></li></ul><a href=/post/hybrid-ci/#comments class=num-comments>Comments</a></div><p class=summary><p>The company I work for uses GitLab to host our Git repositories. Along with
 <a href=https://techcrunch.com/2019/08/08/github-actions-is-now-a-ci-cd-service/>GitHub more recently</a>, it provides a way to
 build your projects directly within the service without relying on an external build server like Jenkins or Travis.
 The general reaction here seems positive, and most people seem happy to rely on it for their only automated build now.
 I can see the benefits but I&rsquo;m hesitant to fully commit. Hybrid CI is an approach I came up with so I could have my
-cake and eat it too.</p></p>
-<a href=/post/hybrid-ci/ class=continue-reading>Continue reading</a>
-</article>
-<article class=post>
-<h2 class=title><a href=/post/solid-the-so-stands-for-snake-oil/>SOLID: the 'SO' stands for Snake Oil</a></h2>
-<div class=meta>
-<span class=date>
-13 September 2020
-</span>
-<ul class=tags>
-<li class=tag><a href=/tags/design/ title="View more posts about design">design</a></li></ul>
-<a href=/post/solid-the-so-stands-for-snake-oil/#comments class=num-comments>Comments</a>
-</div>
-<p class=summary><p>SOLID is possibly the most over-hyped concept in all of software engineering. You can throw away that jar of Sudocrem
-because we&rsquo;ll have no fence-sitting today, no sir.</p></p>
-<a href=/post/solid-the-so-stands-for-snake-oil/ class=continue-reading>Continue reading</a>
-</article>
-<div class=pagination>
-<ul class="pagination pagination-default">
-<li class="page-item disabled">
-<a href=# aria-disabled=true aria-label=First class=page-link role=button tabindex=-1><span aria-hidden=true>&#171;&#171;</span></a>
-</li>
-<li class="page-item disabled">
-<a href=# aria-disabled=true aria-label=Previous class=page-link role=button tabindex=-1><span aria-hidden=true>&#171;</span></a>
-</li>
-<li class="page-item active">
-<a href=# aria-current=page aria-label="Page 1" class=page-link role=button>1</a>
-</li>
-<li class=page-item>
-<a href=/page/2/ aria-label="Page 2" class=page-link role=button>2</a>
-</li>
-<li class=page-item>
-<a href=/page/2/ aria-label=Next class=page-link role=button><span aria-hidden=true>&#187;</span></a>
-</li>
-<li class=page-item>
-<a href=/page/2/ aria-label=Last class=page-link role=button><span aria-hidden=true>&#187;&#187;</span></a>
-</li>
-</ul>
-</div>
-</div>
-</body>
-</html>
+cake and eat it too.</p></p><a href=/post/hybrid-ci/ class=continue-reading>Continue reading</a></article><div class=pagination><ul class=pagination><li class=page-item><a href=/ class=page-link aria-label=First><span aria-hidden=true>&#171;&#171;</span></a></li><li class="page-item disabled"><a class=page-link aria-label=Previous><span aria-hidden=true>&#171;</span></a></li><li class="page-item active"><a class=page-link href=/>1</a></li><li class=page-item><a class=page-link href=/page/2/>2</a></li><li class=page-item><a href=/page/2/ class=page-link aria-label=Next><span aria-hidden=true>&#187;</span></a></li><li class=page-item><a href=/page/2/ class=page-link aria-label=Last><span aria-hidden=true>&#187;&#187;</span></a></li></ul></div></div></body></html>

@@ -1,83 +1,21 @@
-<!doctype html><html lang=en><head>
-<title>Adding control flow to JSX with TypeScript | Michael Boyles</title>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,minimum-scale=1,initial-scale=1">
-<meta name=description content="In this post, I explain how if-else statements can be added to JSX in a React project">
-<meta name=generator content="Hugo 0.89.3">
-<link rel=stylesheet href=https://boyl.es/css/style.css integrity crossorigin=anonymous type=text/css>
-<link rel=stylesheet href=https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css integrity=sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN crossorigin=anonymous type=text/css>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel=stylesheet>
-<script>__FLAMEWARS_CONFIG={awsUrl:'https://rgry1shcqe.execute-api.eu-west-2.amazonaws.com/default',googleClientId:'164705233134-ahoqn1p8em908f190tjgluh2fq6alqo5.apps.googleusercontent.com'}</script>
-<script defer language=javascript type=text/javascript src=https://boyl.es/js/flamewars.js integrity></script>
-</head><body>
-<div class=header><nav>
-<ul class=nav>
-<li><a href=/ title>Home</a></li>
-<li><a href=/about/ title>About</a></li>
-</ul>
-</nav>
-<ul class=social-icons>
-<li>
-<a href=https://github.com/michaelboyles rel=me title=GitHub aria-label=GitHub>
-<i class="fa fa-github" aria-hidden=true></i>
-</a>
-</li>
-<li>
-<a href=https://stackoverflow.com/users/1898563/michael rel=me title=StackOverflow aria-label=StackOverflow>
-<i class="fa fa-stack-overflow" aria-hidden=true></i>
-</a>
-</li>
-<li>
-<a href=https://www.linkedin.com/in/boylesm/ rel=me title=Linkedin aria-label=Linkedin>
-<i class="fa fa-linkedin" aria-hidden=true></i>
-</a>
-</li>
-<li>
-<a href=mailto:michael@boyl.es rel=me title=Email aria-label=Email>
-<i class="fa fa-envelope" aria-hidden=true></i>
-</a>
-</li>
-<li>
-<a href="https://latexonline.cc/compile?git=https%3A%2F%2Fgithub.com%2Fmichaelboyles%2Fwebsite&target=static%2Fdocs%2Fcv.tex&command=xelatex&trackId=1598651052286" rel=me title=CV aria-label=CV>
-<i class="fa fa-file" aria-hidden=true></i>
-</a>
-</li>
-</ul>
-</div>
-<div class=main>
-<div class=post>
-<h1 class=title>Adding control flow to JSX with TypeScript</h1>
-<div class=meta>
-<span class=date>13 June 2021</span>
-<ul class=tags>
-<li class=tag><a href=/tags/project/ title="View more posts about project">project</a></li></ul>
-<a href=#comments class=num-comments>Comments</a>
-</div>
-<div class=content><p>In any non-trivial React project, one of the things you&rsquo;ll eventually need to do is render something conditionally.
+<!doctype html><html lang=en><head><title>Adding control flow to JSX with TypeScript | Michael Boyles</title><meta charset=utf-8><meta name=viewport content="width=device-width,minimum-scale=1,initial-scale=1"><meta name=description content="In this post, I explain how if-else statements can be added to JSX in a React project"><meta name=generator content="Hugo 0.74.3"><link rel=stylesheet href=https://boyl.es/css/style.css integrity crossorigin=anonymous type=text/css><link rel=stylesheet href=https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css integrity=sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN crossorigin=anonymous type=text/css><link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel=stylesheet><script>__FLAMEWARS_CONFIG={awsUrl:'https:\/\/rgry1shcqe.execute-api.eu-west-2.amazonaws.com\/default',googleClientId:'164705233134-ahoqn1p8em908f190tjgluh2fq6alqo5.apps.googleusercontent.com'};</script><script defer language=javascript type=text/javascript src=https://boyl.es/js/flamewars.js integrity></script></head><body><div class=header><nav><ul class=nav><li><a href=/>Home</a></li><li><a href=/about/>About</a></li></ul></nav><ul class=social-icons><li><a href=https://github.com/michaelboyles rel=me title=GitHub aria-label=GitHub><i class="fa fa-github" aria-hidden=true></i></a></li><li><a href=https://stackoverflow.com/users/1898563/michael rel=me title=StackOverflow aria-label=StackOverflow><i class="fa fa-stack-overflow" aria-hidden=true></i></a></li><li><a href=https://www.linkedin.com/in/boylesm/ rel=me title=Linkedin aria-label=Linkedin><i class="fa fa-linkedin" aria-hidden=true></i></a></li><li><a href=mailto:michael@boyl.es rel=me title=Email aria-label=Email><i class="fa fa-envelope" aria-hidden=true></i></a></li><li><a href="https://latexonline.cc/compile?git=https%3A%2F%2Fgithub.com%2Fmichaelboyles%2Fwebsite&target=static%2Fdocs%2Fcv.tex&command=xelatex&trackId=1598651052286" rel=me title=CV aria-label=CV><i class="fa fa-file" aria-hidden=true></i></a></li></ul></div><div class=main><div class=post><h1 class=title>Adding control flow to JSX with TypeScript</h1><div class=meta><span class=date>13 June 2021</span><ul class=tags><li class=tag><a href=/tags/project/ title="View more posts about project">project</a></li></ul><a href=#comments class=num-comments>Comments</a></div><div class=content><p>In any non-trivial React project, one of the things you&rsquo;ll eventually need to do is render something conditionally.
 You <a href=https://react-cn.github.io/react/tips/if-else-in-JSX.html>can&rsquo;t use if-else statements within JSX</a>. You can use
 the conditional (“ternary”) operator but I often find that it produces code that&rsquo;s hard to read. I&rsquo;ve developed a
 transform which adds special meaning to certain JSX tags, allowing you to write <code>&lt;If></code> and <code>&lt;Else></code> blocks which behave
-intuitively.</p>
-<p><a href=https://facebook.github.io/jsx/>JSX</a> is a language extension for JavaScript developed by Facebook. In practice, it&rsquo;s
+intuitively.</p><p><a href=https://facebook.github.io/jsx/>JSX</a> is a language extension for JavaScript developed by Facebook. In practice, it&rsquo;s
 used as an almost intrinsic <a href=https://reactjs.org/docs/jsx-in-depth.html>part of React</a>, though there&rsquo;s no tight
-coupling between the two: you could use JSX without React and vice versa.</p>
-<p>JSX is basically syntactic sugar which allows us to write more expressive code that&rsquo;s closer to the HTML we&rsquo;re looking
-to generate. Take these two examples:</p>
-<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-jsx data-lang=jsx><span style=color:#00a>const</span> div = &lt;<span style=color:#1e90ff;font-weight:700>div</span> <span style=color:#1e90ff>id</span>=<span style=color:#a50>&#34;msg&#34;</span>&gt;Hello World!&lt;/<span style=color:#1e90ff;font-weight:700>div</span>&gt;;
+coupling between the two: you could use JSX without React and vice versa.</p><p>JSX is basically syntactic sugar which allows us to write more expressive code that&rsquo;s closer to the HTML we&rsquo;re looking
+to generate. Take these two examples:</p><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-jsx data-lang=jsx><span style=color:#00a>const</span> div = &lt;<span style=color:#1e90ff;font-weight:700>div</span> <span style=color:#1e90ff>id</span>=<span style=color:#a50>&#34;msg&#34;</span>&gt;Hello World!&lt;/<span style=color:#1e90ff;font-weight:700>div</span>&gt;;
 <span style=color:#00a>const</span> customComponent = &lt;<span style=color:#1e90ff;font-weight:700>MyClock</span> <span style=color:#1e90ff>type</span>=<span style=color:#a50>&#34;analogue&#34;</span> /&gt;;
-</code></pre></div><p>These could be converted to:</p>
-<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#00a>const</span> div = React.createElement(<span style=color:#a50>&#34;div&#34;</span>, {id:<span style=color:#a50>&#34;msg&#34;</span>}, <span style=color:#a50>&#34;Hello World!&#34;</span>);
+</code></pre></div><p>These could be converted to:</p><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#00a>const</span> div = React.createElement(<span style=color:#a50>&#34;div&#34;</span>, {id:<span style=color:#a50>&#34;msg&#34;</span>}, <span style=color:#a50>&#34;Hello World!&#34;</span>);
 <span style=color:#00a>const</span> customComponent = React.createElement(MyClock, {type:<span style=color:#a50>&#34;analogue&#34;</span>});
 </code></pre></div><p>You could also use a different transpiler to produce some other output unrelated to React. The JSX specification states
 that JSX comes “without any defined semantics”. In simple terms, what that means is that a transpiler can decide what
 should be generated. It doesn&rsquo;t need to be invocations of React functions and it doesn&rsquo;t even <em>necessarily</em> need to be
-anything to do with generating HTML.</p>
-<p>JSX mostly succeeds at its goal of making our code more expressive but, because the authors of the JSX spec decided -
+anything to do with generating HTML.</p><p>JSX mostly succeeds at its goal of making our code more expressive but, because the authors of the JSX spec decided -
 in my opinion, correctly - that it should be decoupled from React, they surrendered the ability to include any features
 which would specifically benefit React. In other words, by not defining <em>any</em> semantics, they couldn&rsquo;t define any
-<em>React-specific</em> semantics.</p>
-<p>Take this example which uses a conditional operator to decide which <code>&lt;div></code>s should be rendered<sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup>.</p>
-<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-jsx data-lang=jsx>&lt;<span style=color:#1e90ff;font-weight:700>div</span> <span style=color:#1e90ff>id</span>=<span style=color:#a50>&#34;wrapper&#34;</span>&gt; 
+<em>React-specific</em> semantics.</p><p>Take this example which uses a conditional operator to decide which <code>&lt;div></code>s should be rendered<sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup>.</p><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-jsx data-lang=jsx>&lt;<span style=color:#1e90ff;font-weight:700>div</span> <span style=color:#1e90ff>id</span>=<span style=color:#a50>&#34;wrapper&#34;</span>&gt; 
     { <span style=color:#aaa;font-style:italic>/* Not so bad: */</span> }
     { someCondition ? &lt;<span style=color:#1e90ff;font-weight:700>div</span> <span style=color:#1e90ff>id</span>=<span style=color:#a50>&#34;myDiv&#34;</span>&gt;Div text&lt;/<span style=color:#1e90ff;font-weight:700>div</span>&gt; : <span style=color:#00a>null</span> }
     { <span style=color:#aaa;font-style:italic>/* Worse: */</span> }
@@ -96,67 +34,38 @@ which would specifically benefit React. In other words, by not defining <em>any<
 that&rsquo;s going on. The conditional operator wasn&rsquo;t really designed to be used this way, so it&rsquo;s hardly surprising that it
 doesn&rsquo;t hold up very well. The reason we&rsquo;re limited to using the conditional operator
 (or <a href=https://react-cn.github.io/react/tips/if-else-in-JSX.html>the workarounds described here</a>) is because of how JSX&rsquo;s
-grammar is defined: in JavaScript <code>if</code> is a statement and JSX deals with expressions<sup id=fnref:2><a href=#fn:2 class=footnote-ref role=doc-noteref>2</a></sup>.</p>
-<p>I&rsquo;ve seen a few attempts in various projects to try to handle this more gracefully. They usually end up looking
+grammar is defined: in JavaScript <code>if</code> is a statement and JSX deals with expressions<sup id=fnref:2><a href=#fn:2 class=footnote-ref role=doc-noteref>2</a></sup>.</p><p>I&rsquo;ve seen a few attempts in various projects to try to handle this more gracefully. They usually end up looking
 something like this, where <code>&lt;If></code> is a custom component in which the render method evaluates the condition before
-returning either the children or null.</p>
-<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-jsx data-lang=jsx>&lt;<span style=color:#1e90ff;font-weight:700>If</span> <span style=color:#1e90ff>condition</span>={<span style=color:#0aa>Boolean</span>(someObject)}&gt;
+returning either the children or null.</p><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-jsx data-lang=jsx>&lt;<span style=color:#1e90ff;font-weight:700>If</span> <span style=color:#1e90ff>condition</span>={<span style=color:#0aa>Boolean</span>(someObject)}&gt;
     &lt;<span style=color:#1e90ff;font-weight:700>MyComponent</span> <span style=color:#1e90ff>foo</span>={getFoo()} <span style=color:#1e90ff>bar</span>={someObject.bar} /&gt;
 &lt;/<span style=color:#1e90ff;font-weight:700>If</span>&gt;
 </code></pre></div><p>I find this much more expressive than a conditional operator. The implementation isn&rsquo;t difficult to write either, but it
-has one notable problem which is better understood by looking at the generated code:</p>
-<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript>React.createElement(If, { condition: <span style=color:#0aa>Boolean</span>(someObject) },
+has one notable problem which is better understood by looking at the generated code:</p><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript>React.createElement(If, { condition: <span style=color:#0aa>Boolean</span>(someObject) },
     React.createElement(MyComponent, {foo: getFoo(), bar: someObject.bar } })
 )
 </code></pre></div><p>Since all of the arguments to the first <code>createElement</code> invocation must be evaluated before entering the render method
 of <code>&lt;If></code>, both <code>getFoo()</code> and <code>someObject.bar</code> are evaluated as well. Calling <code>getFoo()</code> is unlikely to be too much of
 a problem unless it&rsquo;s expensive but it&rsquo;s still wasted effort. Accessing <code>someObject.bar</code> is worse, though. Since
 <code>someObject</code> may be falsy (i.e. undefined or null), trying to access <code>bar</code> will throw an error. The conditional operator
-short-circuits but our special component doesn&rsquo;t.</p>
-<p>How can we solve that? It&rsquo;s as simple as changing our transformation. We need to make our transpiler aware of these
-additional semantics. We need to teach it to understand <code>&lt;If></code> blocks.</p>
-<p>I presume that most tools used for transpiling JavaScript (e.g. <a href=https://babeljs.io/>Babel</a>) are extensible enough to
+short-circuits but our special component doesn&rsquo;t.</p><p>How can we solve that? It&rsquo;s as simple as changing our transformation. We need to make our transpiler aware of these
+additional semantics. We need to teach it to understand <code>&lt;If></code> blocks.</p><p>I presume that most tools used for transpiling JavaScript (e.g. <a href=https://babeljs.io/>Babel</a>) are extensible enough to
 achieve this but I chose TypeScript. The TypeScript compiler
 <a href=https://www.typescriptlang.org/docs/handbook/jsx.html>can parse JSX natively</a>
-and <a href=https://github.com/cevek/ttypescript>with a little prodding</a> exposes a neat way of manipulating the AST.</p>
-<p>Simply put, we can replace our usages of <code>&lt;If></code> at compile-time to use a conditional operator instead, as if by magic.
-After transformation, the previous example compiles to the following code. The difference is subtle but important.</p>
-<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#0aa>Boolean</span>(someObject) ?
+and <a href=https://github.com/cevek/ttypescript>with a little prodding</a> exposes a neat way of manipulating the AST.</p><p>Simply put, we can replace our usages of <code>&lt;If></code> at compile-time to use a conditional operator instead, as if by magic.
+After transformation, the previous example compiles to the following code. The difference is subtle but important.</p><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#0aa>Boolean</span>(someObject) ?
     React.createElement(MyComponent, {foo: getFoo(), bar: someObject.bar } })
     : <span style=color:#00a>null</span>
 </code></pre></div><p>I also added support for <code>&lt;Else></code> conditions which I don&rsquo;t think would be possible at all without a transformation.
-The <code>&lt;Else></code> block must immediately follow the closing <code>&lt;/If></code>, excluding whitespace<sup id=fnref:3><a href=#fn:3 class=footnote-ref role=doc-noteref>3</a></sup>.</p>
-<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-jsx data-lang=jsx>&lt;<span style=color:#1e90ff;font-weight:700>If</span> <span style=color:#1e90ff>condition</span>={someCondition}&gt;
+The <code>&lt;Else></code> block must immediately follow the closing <code>&lt;/If></code>, excluding whitespace<sup id=fnref:3><a href=#fn:3 class=footnote-ref role=doc-noteref>3</a></sup>.</p><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-jsx data-lang=jsx>&lt;<span style=color:#1e90ff;font-weight:700>If</span> <span style=color:#1e90ff>condition</span>={someCondition}&gt;
     &lt;<span style=color:#1e90ff;font-weight:700>div</span>&gt;The condition is <span style=color:#00a>true</span>&lt;/<span style=color:#1e90ff;font-weight:700>div</span>&gt;
 &lt;/<span style=color:#1e90ff;font-weight:700>If</span>&gt;
 &lt;<span style=color:#1e90ff;font-weight:700>Else</span>&gt;
     &lt;<span style=color:#1e90ff;font-weight:700>div</span>&gt;The condition is <span style=color:#00a>false</span>&lt;/<span style=color:#1e90ff;font-weight:700>div</span>&gt;
 &lt;/<span style=color:#1e90ff;font-weight:700>Else</span>&gt;
 </code></pre></div><p>By using transformation, we can achieve the expressiveness we want but without losing the desirable properties of
-short-circuiting.</p>
-<p>The <a href=https://github.com/michaelboyles/if-jsx>full code is available on GitHub</a>. The transformation itself is only
-~150 lines.</p>
-<section class=footnotes role=doc-endnotes>
-<hr>
-<ol>
-<li id=fn:1 role=doc-endnote>
-<p>The three attributes arranged vertically are done so for the sake of the example. In this specific case, it might
+short-circuiting.</p><p>The <a href=https://github.com/michaelboyles/if-jsx>full code is available on GitHub</a>. The transformation itself is only
+~150 lines.</p><section class=footnotes role=doc-endnotes><hr><ol><li id=fn:1 role=doc-endnote><p>The three attributes arranged vertically are done so for the sake of the example. In this specific case, it might
 be cleaner to place them all on one line. In reality, seeing 10 or more attributes is not uncommon so this vertical
-style is used a lot.&#160;<a href=#fnref:1 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
-</li>
-<li id=fn:2 role=doc-endnote>
-<p>In other languages <a href=https://kotlinlang.org/docs/control-flow.html>like Kotlin</a>, <code>if</code> can act as an expression.
-This effectively removes the need for a conditional operator&#160;<a href=#fnref:2 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
-</li>
-<li id=fn:3 role=doc-endnote>
-<p>This unfortunately means you can&rsquo;t add a comment between the two blocks such as <code>{/*Otherwise, do this*/}</code>. I
-could whitelist that specific case but it doesn&rsquo;t seem important and I&rsquo;d rather keep the behaviour simple.&#160;<a href=#fnref:3 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
-</li>
-</ol>
-</section></div>
-<hr>
-<div id=comments></div>
-</div>
-</div>
-</body>
-</html>
+style is used a lot. <a href=#fnref:1 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li><li id=fn:2 role=doc-endnote><p>In other languages <a href=https://kotlinlang.org/docs/control-flow.html>like Kotlin</a>, <code>if</code> can act as an expression.
+This effectively removes the need for a conditional operator <a href=#fnref:2 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li><li id=fn:3 role=doc-endnote><p>This unfortunately means you can&rsquo;t add a comment between the two blocks such as <code>{/*Otherwise, do this*/}</code>. I
+could whitelist that specific case but it doesn&rsquo;t seem important and I&rsquo;d rather keep the behaviour simple. <a href=#fnref:3 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li></ol></section></div><hr><div id=comments></div></div></div></body></html>

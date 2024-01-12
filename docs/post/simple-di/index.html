@@ -1,80 +1,15 @@
-<!doctype html><html lang=en><head>
-<title>A simple, compile-time dependency injection framework | Michael Boyles</title>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,minimum-scale=1,initial-scale=1">
-<meta name=description content="A high-level overview of a dependency injection framework I've written using code generation at compile-time">
-<meta name=generator content="Hugo 0.89.3">
-<link rel=stylesheet href=https://boyl.es/css/style.css integrity crossorigin=anonymous type=text/css>
-<link rel=stylesheet href=https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css integrity=sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN crossorigin=anonymous type=text/css>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel=stylesheet>
-<script>__FLAMEWARS_CONFIG={awsUrl:'https://rgry1shcqe.execute-api.eu-west-2.amazonaws.com/default',googleClientId:'164705233134-ahoqn1p8em908f190tjgluh2fq6alqo5.apps.googleusercontent.com'}</script>
-<script defer language=javascript type=text/javascript src=https://boyl.es/js/flamewars.js integrity></script>
-</head><body>
-<div class=header><nav>
-<ul class=nav>
-<li><a href=/ title>Home</a></li>
-<li><a href=/about/ title>About</a></li>
-</ul>
-</nav>
-<ul class=social-icons>
-<li>
-<a href=https://github.com/michaelboyles rel=me title=GitHub aria-label=GitHub>
-<i class="fa fa-github" aria-hidden=true></i>
-</a>
-</li>
-<li>
-<a href=https://stackoverflow.com/users/1898563/michael rel=me title=StackOverflow aria-label=StackOverflow>
-<i class="fa fa-stack-overflow" aria-hidden=true></i>
-</a>
-</li>
-<li>
-<a href=https://www.linkedin.com/in/boylesm/ rel=me title=Linkedin aria-label=Linkedin>
-<i class="fa fa-linkedin" aria-hidden=true></i>
-</a>
-</li>
-<li>
-<a href=mailto:michael@boyl.es rel=me title=Email aria-label=Email>
-<i class="fa fa-envelope" aria-hidden=true></i>
-</a>
-</li>
-<li>
-<a href="https://latexonline.cc/compile?git=https%3A%2F%2Fgithub.com%2Fmichaelboyles%2Fwebsite&target=static%2Fdocs%2Fcv.tex&command=xelatex&trackId=1598651052286" rel=me title=CV aria-label=CV>
-<i class="fa fa-file" aria-hidden=true></i>
-</a>
-</li>
-</ul>
-</div>
-<div class=main>
-<div class=post>
-<h1 class=title>A simple, compile-time dependency injection framework</h1>
-<div class=meta>
-<span class=date>4 February 2023</span>
-<ul class=tags>
-<li class=tag><a href=/tags/project/ title="View more posts about project">project</a></li>
-<li class=tag><a href=/tags/java/ title="View more posts about java">java</a></li></ul>
-<a href=#comments class=num-comments>Comments</a>
-</div>
-<div class=content><p>The most popular <a href=https://en.wikipedia.org/wiki/Dependency_injection>dependency injection</a> frameworks in Java —
+<!doctype html><html lang=en><head><title>A simple, compile-time dependency injection framework | Michael Boyles</title><meta charset=utf-8><meta name=viewport content="width=device-width,minimum-scale=1,initial-scale=1"><meta name=description content="A high-level overview of a dependency injection framework I've written using code generation at compile-time"><meta name=generator content="Hugo 0.74.3"><link rel=stylesheet href=https://boyl.es/css/style.css integrity crossorigin=anonymous type=text/css><link rel=stylesheet href=https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css integrity=sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN crossorigin=anonymous type=text/css><link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel=stylesheet><script>__FLAMEWARS_CONFIG={awsUrl:'https:\/\/rgry1shcqe.execute-api.eu-west-2.amazonaws.com\/default',googleClientId:'164705233134-ahoqn1p8em908f190tjgluh2fq6alqo5.apps.googleusercontent.com'};</script><script defer language=javascript type=text/javascript src=https://boyl.es/js/flamewars.js integrity></script></head><body><div class=header><nav><ul class=nav><li><a href=/>Home</a></li><li><a href=/about/>About</a></li></ul></nav><ul class=social-icons><li><a href=https://github.com/michaelboyles rel=me title=GitHub aria-label=GitHub><i class="fa fa-github" aria-hidden=true></i></a></li><li><a href=https://stackoverflow.com/users/1898563/michael rel=me title=StackOverflow aria-label=StackOverflow><i class="fa fa-stack-overflow" aria-hidden=true></i></a></li><li><a href=https://www.linkedin.com/in/boylesm/ rel=me title=Linkedin aria-label=Linkedin><i class="fa fa-linkedin" aria-hidden=true></i></a></li><li><a href=mailto:michael@boyl.es rel=me title=Email aria-label=Email><i class="fa fa-envelope" aria-hidden=true></i></a></li><li><a href="https://latexonline.cc/compile?git=https%3A%2F%2Fgithub.com%2Fmichaelboyles%2Fwebsite&target=static%2Fdocs%2Fcv.tex&command=xelatex&trackId=1598651052286" rel=me title=CV aria-label=CV><i class="fa fa-file" aria-hidden=true></i></a></li></ul></div><div class=main><div class=post><h1 class=title>A simple, compile-time dependency injection framework</h1><div class=meta><span class=date>4 February 2023</span><ul class=tags><li class=tag><a href=/tags/project/ title="View more posts about project">project</a></li><li class=tag><a href=/tags/java/ title="View more posts about java">java</a></li></ul><a href=#comments class=num-comments>Comments</a></div><div class=content><p>The most popular <a href=https://en.wikipedia.org/wiki/Dependency_injection>dependency injection</a> frameworks in Java —
 Spring and Guice — are built using reflection. There are some problems with this approach, and I believe that a
 compile-time solution is better in most cases. There are already compile-time implementations (e.g.
 <a href=https://github.com/google/dagger>Dagger</a>), but I wanted to write
 <a href=https://github.com/michaelboyles/simple-di>my own bare-bones implementation</a>. It&rsquo;s not designed to be used in real
-projects, but as an illustrative example of how such an implementation can work.</p>
-<p>I see three flaws of using reflection for dependency injection:</p>
-<ol>
-<li>It&rsquo;s hard to debug if something&rsquo;s not wiring together as you expect. Stepping through code that has a heavy reliance
-on reflection is usually horrendous. Spring is great until you see how the sausage gets made.</li>
-<li>You don&rsquo;t catch problems until you actually run your application. The feedback loop for discovering problems is
-slower than it needs to be.</li>
-<li>There&rsquo;s a start-up cost. This might be negligible in a lot of cases, but you&rsquo;re doing some computation every
+projects, but as an illustrative example of how such an implementation can work.</p><p>I see three flaws of using reflection for dependency injection:</p><ol><li>It&rsquo;s hard to debug if something&rsquo;s not wiring together as you expect. Stepping through code that has a heavy reliance
+on reflection is usually horrendous. Spring is great until you see how the sausage gets made.</li><li>You don&rsquo;t catch problems until you actually run your application. The feedback loop for discovering problems is
+slower than it needs to be.</li><li>There&rsquo;s a start-up cost. This might be negligible in a lot of cases, but you&rsquo;re doing some computation every
 single time your application starts which usually only needs to be done once. Especially in cloud-based apps,
-optimizing start-up time can be important.</li>
-</ol>
-<p>The reflection-based approach has its own benefits too. It means you can have runtime discovery of beans, and I&rsquo;ve used
-that to create plugin-like architectures. Most applications don&rsquo;t need that, though.</p>
-<p>The alternative to reflection is to generate some code at compile-time which performs the wiring. That generated code
-might look something like this:</p>
-<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=color:#00a>public</span> <span style=color:#00a>final</span> <span style=color:#00a>class</span> <span style=color:#0a0;text-decoration:underline>SimpleDIContext</span> {
+optimizing start-up time can be important.</li></ol><p>The reflection-based approach has its own benefits too. It means you can have runtime discovery of beans, and I&rsquo;ve used
+that to create plugin-like architectures. Most applications don&rsquo;t need that, though.</p><p>The alternative to reflection is to generate some code at compile-time which performs the wiring. That generated code
+might look something like this:</p><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=color:#00a>public</span> <span style=color:#00a>final</span> <span style=color:#00a>class</span> <span style=color:#0a0;text-decoration:underline>SimpleDIContext</span> {
     <span style=color:#00a>private</span> <span style=color:#00a>final</span> Map&lt;String, Object&gt; nameToBean = <span style=color:#00a>new</span> HashMap&lt;&gt;();
 
     <span style=color:#00a>public</span> <span style=color:#0a0>SimpleDIContext</span>() {
@@ -102,23 +37,18 @@ might look something like this:</p>
 <a href=https://github.com/google/auto/tree/main/service>AutoService</a>, which means that all users need to do is to add a
 <code>provided</code>-scope dependency to their project, <a href=https://projectlombok.org/setup/maven>similar to Lombok</a>.
 I used <a href=https://github.com/square/javapoet>JavaPoet</a> to generate Java source without worrying about tedious and
-error-prone String manipulations.</p>
-<p>To mark classes as beans, I chose
+error-prone String manipulations.</p><p>To mark classes as beans, I chose
 <a href=https://docs.oracle.com/javaee/6/api/javax/inject/package-summary.html><code>javax.inject</code></a> as it already defines all the
 basic things we&rsquo;ll need. By providing an implementation of <a href=https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/AbstractProcessor.html><code>AbstractProcessor</code></a>,
-we can discover and process every class annotated with <a href=https://docs.oracle.com/javaee/6/api/javax/inject/Singleton.html><code>@Singleton</code></a>.</p>
-<p>After finding all annotated classes, we need to work out how they should wire together,
+we can discover and process every class annotated with <a href=https://docs.oracle.com/javaee/6/api/javax/inject/Singleton.html><code>@Singleton</code></a>.</p><p>After finding all annotated classes, we need to work out how they should wire together,
 and in which order they should be created. You can&rsquo;t create <code>Car</code> without an <code>Engine</code>, and you can&rsquo;t create an <code>Engine</code>
-without a <code>Turbocharger</code>, but how do you express that programmatically?</p>
-<p>I noticed that as long as you construct everything in order of their total number of dependencies — both direct
+without a <code>Turbocharger</code>, but how do you express that programmatically?</p><p>I noticed that as long as you construct everything in order of their total number of dependencies — both direct
 and transitive — then the precise order you construct things in doesn&rsquo;t matter. If you first construct everything
 with zero dependencies, then everything with precisely 1 dependency, then 2, and so on, then the exact permutation
-doesn&rsquo;t matter. Two beans with the same total number of dependencies can&rsquo;t depend on each other.</p>
-<p>All we need is a method which finds the total number of dependencies for each bean, then we can sort by that number.
+doesn&rsquo;t matter. Two beans with the same total number of dependencies can&rsquo;t depend on each other.</p><p>All we need is a method which finds the total number of dependencies for each bean, then we can sort by that number.
 This is a simple recursive problem. For each bean, the number of total dependencies is the number of direct dependencies,
 plus the total number of dependencies for each of those. Once we&rsquo;ve obtained that number for a given bean once, we can
-store it in a map to memo it.</p>
-<div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=color:#00a>private</span> <span style=color:#0aa>long</span> <span style=color:#0a0>getNumDependencies</span>(Map&lt;String, Long&gt; fqnToNumDependents, Bean bean) {
+store it in a map to memo it.</p><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=color:#00a>private</span> <span style=color:#0aa>long</span> <span style=color:#0a0>getNumDependencies</span>(Map&lt;String, Long&gt; fqnToNumDependents, Bean bean) {
     <span style=color:#00a>final</span> Long SENTINEL = -123L;
 
     Long prevNumDeps = fqnToNumDependents.<span style=color:#1e90ff>get</span>(bean.<span style=color:#1e90ff>getFqn</span>());
@@ -137,18 +67,9 @@ store it in a map to memo it.</p>
 dependency. We insert the sentinel when we start computing the number for a bean, and if we come across it again then
 it means we&rsquo;re going in circles. The sentinel is negative because it&rsquo;s not possible for something to have a negative
 number of dependencies. A better implementation would keep track of the full path, so that users could see what was
-causing the cycle.</p>
-<p>There&rsquo;s a little more complexity for beans which depend on collections and
+causing the cycle.</p><p>There&rsquo;s a little more complexity for beans which depend on collections and
 <a href=https://docs.oracle.com/javaee/6/api/javax/inject/Provider.html><code>Provider</code></a>s, which I skipped above. Method injection
-is easy; it can just be done after all construction injection.</p>
-<p>I chose not to implement field injection. The Spring team
+is easy; it can just be done after all construction injection.</p><p>I chose not to implement field injection. The Spring team
 <a href=https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#beans-setter-injection>recommend constructor injection</a>
-anyway, and if a field is private then the only way to wire it is using reflection.</p>
-<p>The full project is <a href=https://github.com/michaelboyles/simple-di>hosted on GitHub</a>. The readme explains how to build
-and run it. There&rsquo;s a sample module included to get you up and running quickly.</p></div>
-<hr>
-<div id=comments></div>
-</div>
-</div>
-</body>
-</html>
+anyway, and if a field is private then the only way to wire it is using reflection.</p><p>The full project is <a href=https://github.com/michaelboyles/simple-di>hosted on GitHub</a>. The readme explains how to build
+and run it. There&rsquo;s a sample module included to get you up and running quickly.</p></div><hr><div id=comments></div></div></div></body></html>

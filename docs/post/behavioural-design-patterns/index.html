@@ -1,119 +1,29 @@
-<!doctype html><html lang=en><head>
-<title>Design patterns reviewed #3: behavioural | Michael Boyles</title>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,minimum-scale=1,initial-scale=1">
-<meta name=description content="A review of the behavioural design patterns used in software development">
-<meta name=generator content="Hugo 0.89.3">
-<link rel=stylesheet href=https://boyl.es/css/style.css integrity crossorigin=anonymous type=text/css>
-<link rel=stylesheet href=https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css integrity=sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN crossorigin=anonymous type=text/css>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel=stylesheet>
-<script>__FLAMEWARS_CONFIG={awsUrl:'https://rgry1shcqe.execute-api.eu-west-2.amazonaws.com/default',googleClientId:'164705233134-ahoqn1p8em908f190tjgluh2fq6alqo5.apps.googleusercontent.com'}</script>
-<script defer language=javascript type=text/javascript src=https://boyl.es/js/flamewars.js integrity></script>
-</head><body>
-<div class=header><nav>
-<ul class=nav>
-<li><a href=/ title>Home</a></li>
-<li><a href=/about/ title>About</a></li>
-</ul>
-</nav>
-<ul class=social-icons>
-<li>
-<a href=https://github.com/michaelboyles rel=me title=GitHub aria-label=GitHub>
-<i class="fa fa-github" aria-hidden=true></i>
-</a>
-</li>
-<li>
-<a href=https://stackoverflow.com/users/1898563/michael rel=me title=StackOverflow aria-label=StackOverflow>
-<i class="fa fa-stack-overflow" aria-hidden=true></i>
-</a>
-</li>
-<li>
-<a href=https://www.linkedin.com/in/boylesm/ rel=me title=Linkedin aria-label=Linkedin>
-<i class="fa fa-linkedin" aria-hidden=true></i>
-</a>
-</li>
-<li>
-<a href=mailto:michael@boyl.es rel=me title=Email aria-label=Email>
-<i class="fa fa-envelope" aria-hidden=true></i>
-</a>
-</li>
-<li>
-<a href="https://latexonline.cc/compile?git=https%3A%2F%2Fgithub.com%2Fmichaelboyles%2Fwebsite&target=static%2Fdocs%2Fcv.tex&command=xelatex&trackId=1598651052286" rel=me title=CV aria-label=CV>
-<i class="fa fa-file" aria-hidden=true></i>
-</a>
-</li>
-</ul>
-</div>
-<div class=main>
-<div class=post>
-<h1 class=title>Design patterns reviewed #3: behavioural</h1>
-<div class=meta>
-<span class=date>25 October 2021</span>
-<ul class=tags>
-<li class=tag><a href=/tags/design/ title="View more posts about design">design</a></li></ul>
-<a href=#comments class=num-comments>Comments</a>
-</div>
-<div class=content><p>This is the third and final post in a series in which I’m reviewing
+<!doctype html><html lang=en><head><title>Design patterns reviewed #3: behavioural | Michael Boyles</title><meta charset=utf-8><meta name=viewport content="width=device-width,minimum-scale=1,initial-scale=1"><meta name=description content="A review of the behavioural design patterns used in software development"><meta name=generator content="Hugo 0.74.3"><link rel=stylesheet href=https://boyl.es/css/style.css integrity crossorigin=anonymous type=text/css><link rel=stylesheet href=https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css integrity=sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN crossorigin=anonymous type=text/css><link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel=stylesheet><script>__FLAMEWARS_CONFIG={awsUrl:'https:\/\/rgry1shcqe.execute-api.eu-west-2.amazonaws.com\/default',googleClientId:'164705233134-ahoqn1p8em908f190tjgluh2fq6alqo5.apps.googleusercontent.com'};</script><script defer language=javascript type=text/javascript src=https://boyl.es/js/flamewars.js integrity></script></head><body><div class=header><nav><ul class=nav><li><a href=/>Home</a></li><li><a href=/about/>About</a></li></ul></nav><ul class=social-icons><li><a href=https://github.com/michaelboyles rel=me title=GitHub aria-label=GitHub><i class="fa fa-github" aria-hidden=true></i></a></li><li><a href=https://stackoverflow.com/users/1898563/michael rel=me title=StackOverflow aria-label=StackOverflow><i class="fa fa-stack-overflow" aria-hidden=true></i></a></li><li><a href=https://www.linkedin.com/in/boylesm/ rel=me title=Linkedin aria-label=Linkedin><i class="fa fa-linkedin" aria-hidden=true></i></a></li><li><a href=mailto:michael@boyl.es rel=me title=Email aria-label=Email><i class="fa fa-envelope" aria-hidden=true></i></a></li><li><a href="https://latexonline.cc/compile?git=https%3A%2F%2Fgithub.com%2Fmichaelboyles%2Fwebsite&target=static%2Fdocs%2Fcv.tex&command=xelatex&trackId=1598651052286" rel=me title=CV aria-label=CV><i class="fa fa-file" aria-hidden=true></i></a></li></ul></div><div class=main><div class=post><h1 class=title>Design patterns reviewed #3: behavioural</h1><div class=meta><span class=date>25 October 2021</span><ul class=tags><li class=tag><a href=/tags/design/ title="View more posts about design">design</a></li></ul><a href=#comments class=num-comments>Comments</a></div><div class=content><p>This is the third and final post in a series in which I’m reviewing
 <a href=https://en.wikipedia.org/wiki/Software_design_pattern>software design patterns</a>. This time out I&rsquo;m taking a look at
 <a href=https://en.wikipedia.org/wiki/Behavioral_pattern>behavioural patterns</a>. These all &ldquo;<em>characterize the ways in which
-classes or objects interact</em>&rdquo;. If that sounds indistinct from structural patterns, it&rsquo;s because it is. Just go with it.</p>
-<p>In alphabetical order, they are:</p>
-<h2 id=chain-of-responsibilityhttpsenwikipediaorgwikichain-of-responsibility_pattern><a href=https://en.wikipedia.org/wiki/Chain-of-responsibility_pattern>Chain of Responsibility</a></h2>
-<p>In practice, a chain of responsibility often ends up looking like an instance of the decorator pattern, which is my
+classes or objects interact</em>&rdquo;. If that sounds indistinct from structural patterns, it&rsquo;s because it is. Just go with it.</p><p>In alphabetical order, they are:</p><h2 id=chain-of-responsibilityhttpsenwikipediaorgwikichain-of-responsibility_pattern><a href=https://en.wikipedia.org/wiki/Chain-of-responsibility_pattern>Chain of Responsibility</a></h2><p>In practice, a chain of responsibility often ends up looking like an instance of the decorator pattern, which is my
 favourite pattern. For whatever reason, decorators are categorized as a structural pattern,
 <a href=/post/structural-design-patterns/#decoratorhttpsenwikipediaorgwikidecorator_pattern>previously covered here</a>.
 Some people draw a few minor distinctions between them, like that a decorator always delegates down the chain, while a
-chain of responsibility can stop when a request is handled.</p>
-<h2 id=commandhttpsenwikipediaorgwikicommand_pattern><a href=https://en.wikipedia.org/wiki/Command_pattern>Command</a></h2>
-<p>Maybe the command pattern was more revolutionary in the past, or maybe it&rsquo;s just less relevant in Java, but I feel this
+chain of responsibility can stop when a request is handled.</p><h2 id=commandhttpsenwikipediaorgwikicommand_pattern><a href=https://en.wikipedia.org/wiki/Command_pattern>Command</a></h2><p>Maybe the command pattern was more revolutionary in the past, or maybe it&rsquo;s just less relevant in Java, but I feel this
 is too basic to qualify as a design pattern. It&rsquo;s really just the idea of passing functions as arguments. A generic
 &ldquo;Command&rdquo; interface is no more useful than <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html><code>Runnable</code></a>,
 which has existed in Java since Java 1.0, and became easier to work with in Java 8 and the introduction of lambda
-functions.</p>
-<h2 id=interpreterhttpsenwikipediaorgwikiinterpreter_pattern><a href=https://en.wikipedia.org/wiki/Interpreter_pattern>Interpreter</a></h2>
-<p>The interpreter pattern is really just an application of the <a href=/post/structural-design-patterns/#compositehttpsenwikipediaorgwikicomposite_pattern>composite pattern</a>
+functions.</p><h2 id=interpreterhttpsenwikipediaorgwikiinterpreter_pattern><a href=https://en.wikipedia.org/wiki/Interpreter_pattern>Interpreter</a></h2><p>The interpreter pattern is really just an application of the <a href=/post/structural-design-patterns/#compositehttpsenwikipediaorgwikicomposite_pattern>composite pattern</a>
 in a specific context: a language built from composable expressions. It&rsquo;s good but there doesn&rsquo;t need to be a
-distinction.</p>
-<h2 id=mediatorhttpsenwikipediaorgwikimediator_pattern><a href=https://en.wikipedia.org/wiki/Mediator_pattern>Mediator</a></h2>
-<p>The core idea seems fine but the name and the implementation put me off. The book gives an example where two widgets
+distinction.</p><h2 id=mediatorhttpsenwikipediaorgwikimediator_pattern><a href=https://en.wikipedia.org/wiki/Mediator_pattern>Mediator</a></h2><p>The core idea seems fine but the name and the implementation put me off. The book gives an example where two widgets
 on a form affect one another, and that logic which governs that interaction is pulled into a &ldquo;mediator&rdquo; rather than placed
 in one (or both) of the widgets. I think aiming to decouple the widgets from their interactions is good. You can achieve
-something similar with observers though.</p>
-<h2 id=mementohttpsenwikipediaorgwikimemento_pattern><a href=https://en.wikipedia.org/wiki/Memento_pattern>Memento</a></h2>
-<p>This pattern aims to capture a mutable object&rsquo;s state so that it can be restored later. Immutability is often better.
-By keeping a stack of immutable objects, you can restore state by popping off elements.</p>
-<h2 id=null-objecthttpsenwikipediaorgwikinull_object_pattern><a href=https://en.wikipedia.org/wiki/Null_object_pattern>Null Object</a></h2>
-<p>The null object pattern is an excellent alternative to returning a null reference. Not every interface lends itself to
-having a null implementation though. A method which returns a primitive might have no sensible return value.</p>
-<h2 id=observerhttpsenwikipediaorgwikiobserver_pattern><a href=https://en.wikipedia.org/wiki/Observer_pattern>Observer</a></h2>
-<p>In moderation, this one&rsquo;s simple but effective. In a complex application, especially ones where these relationships
+something similar with observers though.</p><h2 id=mementohttpsenwikipediaorgwikimemento_pattern><a href=https://en.wikipedia.org/wiki/Memento_pattern>Memento</a></h2><p>This pattern aims to capture a mutable object&rsquo;s state so that it can be restored later. Immutability is often better.
+By keeping a stack of immutable objects, you can restore state by popping off elements.</p><h2 id=null-objecthttpsenwikipediaorgwikinull_object_pattern><a href=https://en.wikipedia.org/wiki/Null_object_pattern>Null Object</a></h2><p>The null object pattern is an excellent alternative to returning a null reference. Not every interface lends itself to
+having a null implementation though. A method which returns a primitive might have no sensible return value.</p><h2 id=observerhttpsenwikipediaorgwikiobserver_pattern><a href=https://en.wikipedia.org/wiki/Observer_pattern>Observer</a></h2><p>In moderation, this one&rsquo;s simple but effective. In a complex application, especially ones where these relationships
 between classes are managed automatically (e.g. a dependency injection framework), you can quickly run into circular
 dependencies. An effective way to solve this is to introduce a broker between the source and the target; this way, every
-component depends on the broker and not directly on other logical components.</p>
-<h2 id=specificationhttpsenwikipediaorgwikispecification_pattern><a href=https://en.wikipedia.org/wiki/Specification_pattern>Specification</a></h2>
-<p>The specification pattern is the same as the interpreter pattern. Ultimately, what you&rsquo;re doing is composing expressions.</p>
-<h2 id=statehttpsenwikipediaorgwikistate_pattern><a href=https://en.wikipedia.org/wiki/State_pattern>State</a></h2>
-<p>The state pattern is conceptually similar to the proxy pattern The only real difference is that a proxy has a single,
-fixed delegate and the state pattern will mutably adjust its delegate according to some state transitions.</p>
-<p>Terrible name, by the way. Almost any object is going to include state.</p>
-<h2 id=strategyhttpsenwikipediaorgwikistrategy_pattern><a href=https://en.wikipedia.org/wiki/Strategy_pattern>Strategy</a></h2>
-<p>This is a great one. It&rsquo;s basically an object-oriented application of a functional idea.
+component depends on the broker and not directly on other logical components.</p><h2 id=specificationhttpsenwikipediaorgwikispecification_pattern><a href=https://en.wikipedia.org/wiki/Specification_pattern>Specification</a></h2><p>The specification pattern is the same as the interpreter pattern. Ultimately, what you&rsquo;re doing is composing expressions.</p><h2 id=statehttpsenwikipediaorgwikistate_pattern><a href=https://en.wikipedia.org/wiki/State_pattern>State</a></h2><p>The state pattern is conceptually similar to the proxy pattern The only real difference is that a proxy has a single,
+fixed delegate and the state pattern will mutably adjust its delegate according to some state transitions.</p><p>Terrible name, by the way. Almost any object is going to include state.</p><h2 id=strategyhttpsenwikipediaorgwikistrategy_pattern><a href=https://en.wikipedia.org/wiki/Strategy_pattern>Strategy</a></h2><p>This is a great one. It&rsquo;s basically an object-oriented application of a functional idea.
 <a href=https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Collections.html#sort(java.util.List,java.util.Comparator)>Java&rsquo;s Comparator</a>
 is a nice example. There are infinitely many ways you might want to sort a collection of items and the majority of the
-sorting logic can be implemented generically. As a user you just need to plug in a function which compares two items.</p>
-<h2 id=template-methodhttpsenwikipediaorgwikitemplate_method_pattern><a href=https://en.wikipedia.org/wiki/Template_method_pattern>Template method</a></h2>
-<p>The template method is an ugly cousin to the strategy pattern. It&rsquo;s worse because it relies on inheritance. You probably
+sorting logic can be implemented generically. As a user you just need to plug in a function which compares two items.</p><h2 id=template-methodhttpsenwikipediaorgwikitemplate_method_pattern><a href=https://en.wikipedia.org/wiki/Template_method_pattern>Template method</a></h2><p>The template method is an ugly cousin to the strategy pattern. It&rsquo;s worse because it relies on inheritance. You probably
 shouldn&rsquo;t actively look for reasons to use it, but it&rsquo;s not going to make a class hierarchy that already uses
-inheritance any worse.</p>
-<h2 id=visitorhttpsenwikipediaorgwikivisitor_pattern><a href=https://en.wikipedia.org/wiki/Visitor_pattern>Visitor</a></h2>
-<p>The visitor pattern is great for processing an abstract syntax tree and&mldr; I think that&rsquo;s about it. I&rsquo;ve never seen it
-used outside that context, except for contrived examples involving domestic animals.</p>
-<hr>
-<p><a href=/post/creational-design-patterns>Part 1 - Creational Design Patterns</a></p>
-<p><a href=/post/structural-design-patterns>Part 2 - Structural Design Patterns</a></p></div>
-<hr>
-<div id=comments></div>
-</div>
-</div>
-</body>
-</html>
+inheritance any worse.</p><h2 id=visitorhttpsenwikipediaorgwikivisitor_pattern><a href=https://en.wikipedia.org/wiki/Visitor_pattern>Visitor</a></h2><p>The visitor pattern is great for processing an abstract syntax tree and&mldr; I think that&rsquo;s about it. I&rsquo;ve never seen it
+used outside that context, except for contrived examples involving domestic animals.</p><hr><p><a href=/post/creational-design-patterns>Part 1 - Creational Design Patterns</a></p><p><a href=/post/structural-design-patterns>Part 2 - Structural Design Patterns</a></p></div><hr><div id=comments></div></div></div></body></html>

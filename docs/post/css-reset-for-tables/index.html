@@ -1,0 +1,60 @@
+<!doctype html><html lang=en><head><title>A CSS Grid Reset for Tables | Michael Boyles</title><meta charset=utf-8><meta name=viewport content="width=device-width,minimum-scale=1,initial-scale=1"><meta name=description content="A guide for how to override the default CSS for <table> elements to use CSS grids instead"><meta name=generator content="Hugo 0.74.3"><link rel=stylesheet href=https://boyl.es/css/style.css integrity crossorigin=anonymous type=text/css><link rel=stylesheet href=https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css integrity=sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN crossorigin=anonymous type=text/css><link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel=stylesheet><script>__FLAMEWARS_CONFIG={awsUrl:'https:\/\/rgry1shcqe.execute-api.eu-west-2.amazonaws.com\/default',googleClientId:'164705233134-ahoqn1p8em908f190tjgluh2fq6alqo5.apps.googleusercontent.com'};</script><script defer language=javascript type=text/javascript src=https://boyl.es/js/flamewars.js integrity></script></head><body><div class=header><nav><ul class=nav><li><a href=/>Home</a></li><li><a href=/about/>About</a></li></ul></nav><ul class=social-icons><li><a href=https://github.com/michaelboyles rel=me title=GitHub aria-label=GitHub><i class="fa fa-github" aria-hidden=true></i></a></li><li><a href=https://stackoverflow.com/users/1898563/michael rel=me title=StackOverflow aria-label=StackOverflow><i class="fa fa-stack-overflow" aria-hidden=true></i></a></li><li><a href=https://www.linkedin.com/in/boylesm/ rel=me title=Linkedin aria-label=Linkedin><i class="fa fa-linkedin" aria-hidden=true></i></a></li><li><a href=mailto:michael@boyl.es rel=me title=Email aria-label=Email><i class="fa fa-envelope" aria-hidden=true></i></a></li><li><a href="https://latexonline.cc/compile?git=https%3A%2F%2Fgithub.com%2Fmichaelboyles%2Fwebsite&target=static%2Fdocs%2Fcv.tex&command=xelatex&trackId=1598651052286" rel=me title=CV aria-label=CV><i class="fa fa-file" aria-hidden=true></i></a></li></ul></div><div class=main><div class=post><h1 class=title>A CSS Grid Reset for Tables</h1><div class=meta><span class=date>12 January 2024</span><ul class=tags><li class=tag><a href=/tags/webdev/ title="View more posts about webdev">webdev</a></li></ul><a href=#comments class=num-comments>Comments</a></div><div class=content><p>Trying to style an HTML table is one of the few things that gives me flashbacks to how annoying web development used to
+be back in the day. There are 8 different <code>display: table*</code> types which all have subtly inconsistent behaviour from
+everything else. Want to add a border radius to a table row? Fuck you,
+<a href=https://developer.mozilla.org/en-US/docs/Web/CSS/border-radius#formal_definition>&ldquo;the behavior on internal table elements is undefined&rdquo;</a>.</p><p>That was the straw that broke the camel&rsquo;s back for me today. I&rsquo;m sick of dealing with issues like that, when working
+with grids is comparatively such a pleasure. But I don&rsquo;t want to give up the semantic value of the <code>&lt;table></code> tag and its
+children; I don&rsquo;t want to replace all my tables with <code>&lt;div></code>-based grids.</p><p>I&rsquo;ve written a small CSS reset which uses CSS grids to replace most of the default <code>&lt;table></code> behaviour. I&rsquo;ll explain
+each section individually. Jump to the bottom for the full code.</p><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-css data-lang=css><span style=color:#1e90ff;font-weight:700>table</span> {
+    <span style=color:#00a>display</span>: <span style=color:#00a>grid</span>;
+    <span style=color:#00a>grid-template-columns</span>: <span style=color:#0a0>repeat</span>(<span style=color:#099>100</span>, max-content);
+}
+</code></pre></div><p>The first line is self-explanatory, but I&rsquo;m aware that the second one will have caused at least a few brows to crinkle.
+If we never define how many columns a table has then everything will end up stacked in a single column. I intend to override
+<code>grid-template-columns</code> for every table, but I wanted a default that wasn&rsquo;t going to be wrong almost all the time;
+how often does a table genuinely only have one column?</p><p>The value 100 is fairly arbitrary. If you have fewer than 100 columns then any extra ones will all collapse to zero
+width, so it doesn&rsquo;t really matter that it&rsquo;s significantly higher than most tables will have. I&rsquo;ve seen some performance
+issues with subgrids in the past, which is one reason I didn&rsquo;t use, say, 9999999.</p><p>If you add a <code>gap</code> then the extra columns will no longer collapse — you&rsquo;ll get a bunch of gaps between zero-width
+columns — but if you&rsquo;re adding styles like <code>gap</code> then the idea is that you should also be overriding <code>grid-template-columns</code>.</p><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-css data-lang=css><span style=color:#1e90ff;font-weight:700>thead</span>, <span style=color:#1e90ff;font-weight:700>tbody</span>, <span style=color:#1e90ff;font-weight:700>tr</span> {
+    <span style=color:#00a>display</span>: <span style=color:#00a>grid</span>;
+    <span style=color:#00a>grid-column</span>: <span style=color:#099>1</span> / <span style=color:#099>-1</span>;
+    <span style=color:#00a>grid-template-columns</span>: subgrid;
+}
+</code></pre></div><p>Having <code>thead</code>, <code>tbody</code>, and <code>tr</code> span the entire table (<code>1 / -1</code>) and define their own subgrids achieves almost the
+same thing as if the <code>td</code> and <code>th</code> elements were direct children of the table. <code>display: contents</code> would achieve
+something similar, but that would preclude being able to add a background colour or borders.</p><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-css data-lang=css><span style=color:#1e90ff;font-weight:700>td</span>, <span style=color:#1e90ff;font-weight:700>th</span> {
+    <span style=color:#00a>display</span>: <span style=color:#00a>block</span>;
+}
+</code></pre></div><p>This just overrides the default <code>display: table-cell</code> in case that has inconsistent behaviour, which — let&rsquo;s
+face it — it probably does.</p><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-css data-lang=css><span style=color:#1e90ff;font-weight:700>td</span>[<span style=color:#1e90ff;font-weight:700>cellspan</span>=<span style=color:#a50>&#34;2&#34;</span>] {
+    <span style=color:#00a>grid-column</span>: span <span style=color:#099>2</span>;
+}
+</code></pre></div><p>It&rsquo;s very rare that I use cell spans, but you can achieve the same functionality using an attribute selector.
+Unfortunately, you need one selector for every value of the span.</p><p>You could use similar selectors for row spans, but they won&rsquo;t work because a cell can&rsquo;t span across different subgrids.
+You can fix that by changing the <code>thead, tbody, tr</code> selector to <code>display: contents</code>, but you&rsquo;ll lose the ability to
+add a <code>background-color</code> and borders. You can work around that by adding those styles to the individual cells, but it&rsquo;s
+kind of a faff.</p><p>I&rsquo;ve literally never used <code>&lt;colgroup></code> so I&rsquo;m going to pretend that it doesn&rsquo;t exist. I suspect there might be some
+other wierd table features I&rsquo;m forgetting.</p><p>The full code is below and I made <a href="https://codepen.io/lmayyqlf-the-bold/pen/YzgpNda?editors=1100">a CodePen to play with</a>
+as well.</p><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-css data-lang=css><span style=color:#1e90ff;font-weight:700>table</span> {
+  <span style=color:#00a>display</span>: <span style=color:#00a>grid</span>;
+  <span style=color:#00a>grid-template-columns</span>: <span style=color:#0a0>repeat</span>(<span style=color:#099>100</span>, max-content);
+}
+<span style=color:#1e90ff;font-weight:700>thead</span>, <span style=color:#1e90ff;font-weight:700>tbody</span>, <span style=color:#1e90ff;font-weight:700>tr</span> {
+    <span style=color:#00a>display</span>: <span style=color:#00a>grid</span>;
+    <span style=color:#00a>grid-column</span>: <span style=color:#099>1</span> / <span style=color:#099>-1</span>;
+    <span style=color:#00a>grid-template-columns</span>: subgrid;
+}
+<span style=color:#1e90ff;font-weight:700>td</span>, <span style=color:#1e90ff;font-weight:700>th</span> {
+  <span style=color:#00a>display</span>: <span style=color:#00a>block</span>;
+}
+<span style=color:#1e90ff;font-weight:700>caption</span> {
+    <span style=color:#00a>grid-column</span>: <span style=color:#099>1</span> / <span style=color:#099>-1</span>;
+}
+<span style=color:#1e90ff;font-weight:700>td</span>[<span style=color:#1e90ff;font-weight:700>cellspan</span>=<span style=color:#a50>&#34;2&#34;</span>] {
+    <span style=color:#00a>grid-column</span>: span <span style=color:#099>2</span>;
+}
+<span style=color:#1e90ff;font-weight:700>td</span>[<span style=color:#1e90ff;font-weight:700>cellspan</span>=<span style=color:#a50>&#34;3&#34;</span>] {
+    <span style=color:#00a>grid-column</span>: span <span style=color:#099>3</span>;
+}
+<span style=color:#aaa;font-style:italic>/* ... and so on */</span>
+</code></pre></div><p>Because this isn&rsquo;t going to work for every table, I might make this opt-in in future under a <code>.grid-table</code> class or
+something. For now, I&rsquo;m going to be applying this as a global style throughout a few projects to see what happens.</p></div><hr><div id=comments></div></div></div></body></html>
