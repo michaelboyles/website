@@ -106,7 +106,7 @@ actually able to scale with the number of users as they continue to grow.
 
 This graph shows the total number of users actively participating each month. I've defined participation as posting a
 comment, a question or an answer. For example, last month almost 212,000 users performed any one of those 3 activities
-- about 1.6% of their registered users - and only 71,000 of those answered a question.
+&mdash; about 1.6% of their registered users &mdash; and only 71,000 of those answered a question.
 
 Effectively only a third of users who are engaging at all are choosing to answer a question in any given month. That's
 pretty bad but looks like it's always been a similar ratio, even when the site seemed to function more smoothly. What
